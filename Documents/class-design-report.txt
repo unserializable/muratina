@@ -63,23 +63,81 @@ SortedMap:
 |_)_ _     _| _  /  _  _| _  
 | _>(/_|_|(_|(_) \_(_)(_|(/_ 
                              
-SimulationGenerator class:
-  Client SimulationGenerator.rndClient():
-  Set<Client> +rndPopulation(Integer populationSize)
-  Employee +rndEmployee(EmployeeType employeeType)
-  Set<Employee> +rndStaff(Map<EmployeeType, Integer> employeeCounts)
-  Set<Integer> +rndCombination(Integer k, Integer n)
-  Set<T> +rndCombination(Integer k, Set<T> things)
-  String +rndPhoneNumber()
-  String +rndForeName()
-  String +rndSurname()
-  String +rndTaxCode()
+///////////////////////////////////
+SimulationGenerator
+///////////////////////////////////
+  SimulationGenerator.rndClient():
+    create Client AS (client)
+	set (client) name to (SimulationGenerator.rndForeName())
+	set (client) surname to (SimulationGenerator.rndSurname())
+	set (client) phone number to (SimulationGenerator.rndPhoneNumber())
+	set (client) tax code to (SimulationGenerator.rndTaxCode())
+    return (client)
+
+  Set<Client> +rndPopulation(Integer populationSize):
+    create Set<Client> AS (population)
+    while (population) contains less than populationSize Clients
+      add (SimulationGenerator.rndClient()) to (population)
+	return (population)
+
+  Employee +rndEmployee(EmployeeType employeeType):
+    create Employee AS (employee)
+    set (employee) name to (SimulationGenerator.rndForeName())
+    set (employee) surname to (SimulationGenerator.rndSurname())
+    set (employee) experience to Low
+    set (employee) type to (employeeType)
+    set (employee) salary to (#Employee Salary (employee))
+    if (employeeType) is Chef
+      set (employee) tax code to (SimulationGenerator.rndTaxCode())
+	return (employee)
+
+  Set<Employee> +rndStaff(Map<EmployeeType, Integer> employeeCounts):
+    create Set<Employee> as (result)
+    for each (employeeType, employeeCount) FROM (employeeCounts)
+      create Set<Employee> as (employees)
+	  while (employees) contains less than (employeeCount) elements
+	    add SimulationGenerator.rndEmployee(employeeType) to (employees)
+	  add (employees) to (result)
+	return result
+
+  Set<Integer> +rndCombination(Integer k, Integer n):
+    create empty Set<Integer> of initial allocated size k AS (combination)
+    if (k == n)
+      add 1..n to (combination)
+	  return (combination)
+	else
+	  while (combination) has less than k elements
+	    add random Integer from range (1..n) to (combination)
+	return (combination)
+
+  Set<T> +rndCombination(Integer k, Set<T> things):
+    set (SimulationGenerator.rndCombination(k, length of (things)) AS (numberCombination)
+    for each (numericIndex) from (combination)
+      add (things) element at (numericIndex) to (result)
+    return (result)
+
+  String +rndPhoneNumber():
+    get random country code from predefined international calling country codes list AS (prefix)
+    generate random 8-digit number AS (suffix)
+    return concatenation of (prefix) AND single whitespace AND (suffix)
+
+  String +rndForeName():
+    return (random element from pre-defined forenames List)
+
+  String +rndSurname():
+    return (random element from pre-defined surnames List)
+
+  String +rndTaxCode():
+    return (random 11-digit string)
+ // END OF SimulationGenerator
 							 
 (game starts from Controller.main)
 
 # Assign Tables
+  TODO
 
 # Create Menu
+  TODO
 
 # De-serialize High Score List
   de-serialize HighScoreList from saved file 'muratino-hs.ser'
@@ -92,22 +150,22 @@ SimulationGenerator class:
 	display newline
 
 # Employee Salary (employee)
-  if (employee) is Waiter set 200 AS (baseSalary)
-  else set 300 AS (baseSalary)
-  if (employee) experience is Low
-    return (baseSalary)
+  baseSalary = 200 if (employee) is Waiter else 300
+  if (employee) experience is High
+    return (baseSalary)+ 200
   else if (employee) experience is Medium
     return (baseSalary) + 100
-  return (baseSalary) + 200
+  return (baseSalary)
 
 # Game Day Simulation
   set (#Semi-Random Table Combination(restaurant)) AS (occupiedTables)
   set (#Semi-Random Client Combination(restaurant)) AS (visitingClients)
-  set 
+  TODO
 
 # End Of Game Day
   display "Another business day has passed."
   display "Budget available for the next day is: " and  (restaurant.availableBudget)
+  TODO
 
 # Exit Game
   terminate game process
@@ -121,81 +179,22 @@ SimulationGenerator class:
    return (input)
   
 # Main
-  # Populate Clients
-  # Populate Employees
+  population = SimulationGenerator.rndPopulation(18)
+  employees = SimulationGenerator.rndStaff({Barman:1, Chef:1, Waiter: 3})
   while (user has not chosen to exit the game)
     # Show Player Options Menu
     # Wait User Input
     # React To User Input
 
-# Populate Clients
-  create Set<Client> AS (population)
-  while (population) contains < 18 Client's
-    create Client AS (client)
-	set (client) name to (#Semi-Random Name)
-	set (client) surname to (#Semi-Random Surname)
-	set (client) phone number to (#Semi-Random Phone Number)
-	set (client) tax code to (#Semi-Random Tax Code)
-	add (client) to (population)
-  return (population)
-
-# Populate Employees
-  create Set<Employee> AS (employees)
-  while (employees) contains < 3 Employee's
-    add (#Semi-Random Employee(Waiter)) to (employees))
-  add (#Semi-Random Employee(Barman)) to (employees))
-  add (#Semi-Random Employee(Chef)) to (employees))
-  return (employees)
-
 # Save High Score List
   serialize HighScoreList into saved file 'muratino-hs.ser'
 
-# Random Combination(k, n)
-  create Set<Integer> of initial size k and no elements AS (combination)
-  if (k == n)
-    add 1..n to (combination)
-	return (combination)
-  else
-    while (combination) has less than k elements
-      add Random Integer from range (1..n) to (combination)
-    return (combination)
-
-# Random Combination of Things(k, Set<Thing> things)
-  set (#Random Combination(k, number of elements in (things))) AS (numberCombination)
-  for each (numericIndex) from (combination)
-    add (things) element at (numericIndex) to (result)
-  return (result)
-
-# Semi-Random Client Combination(restaurant)
-   if (restaurant.reputation) is >= 30
-     return (population)
-   if (restaurant.reputation) is < 15
-     return (# Random Combination of Things(4, (population)))
-   else
-     return (# Random Combination of Things(10, (population)))
-
-# Semi-Random Employee(employeeType)
-  create Employee AS (employee)
-  set (employee) name to (#Semi-Random Name)
-  set (employee) surname to (#Semi-Random Surname)
-  set (employee) experience to Low
-  set (employee) type to (employeeType)
-  set (employee) salary to (#Employee Salary (employee))
-  if (employeeType) is Chef
-    set (employee) tax code to (#Semi-Random Tax Code)
-  return (employee)
-
-# Semi-Random Phone Number
-  get random country code from predefined international calling country codes list AS (prefix)
-  generate random 8-digit number AS (suffix)
-  return concatenation of (prefix) and single whitespace and (suffix)
-
-# Semi-Random Name
-  return random element from pre-defined names List
-
-# Semi-Random Surname
-  return random element from pre-defined surnames List
-
+# Semi-Random Client Combination(restaurant, population)
+   numClients = if (restaurant.reputation) is >= 30 set restaurant.tables.length*2 AS (numClients)
+   else if (restaurant.reputation) is < 15 set 4 AS (numClients)
+   else set 10 AS (numClients)
+   return SimulationGenerator.rndCombination(numClients, population)
+  
 # Semi-Random Table Combination(restaurant)
    if (restaurant.reputation) is >= 30
      return (1..9)
@@ -203,9 +202,6 @@ SimulationGenerator class:
      return (#Random Combination(2, 9))
    else
      return (#Random Combination(5, 9))
-
-# Semi-Random Tax Code
-  return random 11-digit number
 
 # Show Player Options Menu
   if (no Game ongoing)
