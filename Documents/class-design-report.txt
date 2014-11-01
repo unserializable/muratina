@@ -64,11 +64,42 @@ SortedMap:
 | _>(/_|_|(_|(_) \_(_)(_|(/_ 
                              
 SimulationGenerator class:
-  Client SimulationGenerator.rndClient():
-  Set<Client> +rndPopulation(Integer populationSize)
-  Employee +rndEmployee(EmployeeType employeeType)
+  SimulationGenerator.rndClient():
+    create Client AS (client)
+	set (client) name to (SimulationGenerator.rndForeName())
+	set (client) surname to (SimulationGenerator.rndSurname())
+	set (client) phone number to (SimulationGenerator.rndPhoneNumber())
+	set (client) tax code to (SimulationGenerator.rndTaxCode())
+    return (client)
+
+  Set<Client> +rndPopulation(Integer populationSize):
+    create Set<Client> AS (population)
+    while (population) contains less than populationSize Clients
+      add (SimulationGenerator.rndClient()) to (population)
+	return (population)
+
+  Employee +rndEmployee(EmployeeType employeeType):
+    create Employee AS (employee)
+    set (employee) name to (SimulationGenerator.rndForeName())
+    set (employee) surname to (SimulationGenerator.rndSurname())
+    set (employee) experience to Low
+    set (employee) type to (employeeType)
+    set (employee) salary to (#Employee Salary (employee))
+    if (employeeType) is Chef
+      set (employee) tax code to (SimulationGenerator.rndTaxCode())
+	return (employee)
+
   Set<Employee> +rndStaff(Map<EmployeeType, Integer> employeeCounts)
+    create Set<Employee> as (result)
+    for each (employeeType, employeeCount) in (employeeCounts)
+      create Set<Employee> as (employees)
+	  while (employees) contains less than (employeeCount) elements
+	    add SimulationGenerator.rndEmployee(employeeType) to (employees)
+	  add (employees) to (result)
+	return result
+
   Set<Integer> +rndCombination(Integer k, Integer n)
+
   Set<T> +rndCombination(Integer k, Set<T> things)
   String +rndPhoneNumber()
   String +rndForeName()
@@ -121,31 +152,12 @@ SimulationGenerator class:
    return (input)
   
 # Main
-  # Populate Clients
-  # Populate Employees
+  population = SimulationGenerator.rndPopulation(18)
+  employees = SimulationGenerator.rndStaff({Barman:1, Chef:1, Waiter: 3})
   while (user has not chosen to exit the game)
     # Show Player Options Menu
     # Wait User Input
     # React To User Input
-
-# Populate Clients
-  create Set<Client> AS (population)
-  while (population) contains < 18 Client's
-    create Client AS (client)
-	set (client) name to (#Semi-Random Name)
-	set (client) surname to (#Semi-Random Surname)
-	set (client) phone number to (#Semi-Random Phone Number)
-	set (client) tax code to (#Semi-Random Tax Code)
-	add (client) to (population)
-  return (population)
-
-# Populate Employees
-  create Set<Employee> AS (employees)
-  while (employees) contains < 3 Employee's
-    add (#Semi-Random Employee(Waiter)) to (employees))
-  add (#Semi-Random Employee(Barman)) to (employees))
-  add (#Semi-Random Employee(Chef)) to (employees))
-  return (employees)
 
 # Save High Score List
   serialize HighScoreList into saved file 'muratino-hs.ser'
@@ -173,17 +185,6 @@ SimulationGenerator class:
      return (# Random Combination of Things(4, (population)))
    else
      return (# Random Combination of Things(10, (population)))
-
-# Semi-Random Employee(employeeType)
-  create Employee AS (employee)
-  set (employee) name to (#Semi-Random Name)
-  set (employee) surname to (#Semi-Random Surname)
-  set (employee) experience to Low
-  set (employee) type to (employeeType)
-  set (employee) salary to (#Employee Salary (employee))
-  if (employeeType) is Chef
-    set (employee) tax code to (#Semi-Random Tax Code)
-  return (employee)
 
 # Semi-Random Phone Number
   get random country code from predefined international calling country codes list AS (prefix)
