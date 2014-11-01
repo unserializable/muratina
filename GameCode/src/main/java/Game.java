@@ -8,7 +8,7 @@ public class Game
 	
 	private HighScoreList highScoreList;
 	
-	private Player player;
+	public Player player;
 		
 	public Integer day;
 	
@@ -16,12 +16,8 @@ public class Game
 	{
 		
 	}
-	
-	public void exit( )
-	{
-		
-	}
-	
-	
 
+	public Game(Player player) {
+		this.player = player;
+	}
 }

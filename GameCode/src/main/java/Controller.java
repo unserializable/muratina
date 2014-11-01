@@ -14,8 +14,7 @@ private static String userInput;
 			//Game Start
 			restaurant = new Restaurant();
 			player  = new Player();
-			
-			
+			game = new Game(player);
 			System.out.println(
 			  "\n __  __                 _   _        	"
 	   		+ "\n|  \\/  |_   _ _ __ __ _| |_(_)_ __   __ _"
@@ -58,26 +57,30 @@ private static String userInput;
 	}
 
 	private static void loadMenu() {
-		//Display Start Menu
 		do {	
 					collectInput();
 					switch (userInput) {
 					  case "1":
-						  	game = new Game();
-					        break;
+						  	
+						  	
+					        //break;
 					  case "2": 
 						  	highScoreList = new HighScoreList();
-						  	highScoreList.saveToScoreList(player.name + restaurant.name + restaurant.availableBudget);
+						  	highScoreList.saveToScoreList(player.name + " : " + restaurant.name + " : " + restaurant.availableBudget);
 					        highScoreList.getScoreList();
-					        System.out.println("\n 00. Home"
+					        System.out.println("00. Home"
 					        		+ "\n 0. Back");
-					        break;
+					        //break;
 					  case "42":
 						     System.out.println("Bye Bye");
 					         System.exit(0);// they are executed if variable ==  any of the above c's
-					        break;
+					        //break;
+					  case "0":
+						     System.out.println("Bye Bye");
+					         System.exit(0);// they are executed if variable ==  any of the above c's
+					        
 					  default:
-					        break;
+					        //break;
 				}
 		}
 		while (true);
