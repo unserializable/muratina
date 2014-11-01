@@ -1,0 +1,261 @@
+Class Design Report
+ __  __                 _   _             
+|  \/  |_   _ _ __ __ _| |_(_)_ __   __ _ 
+| |\/| | | | | '__/ _` | __| | '_ \ / _` |
+| |  | | |_| | | | (_| | |_| | | | | (_| |
+|_|  |_|\__,_|_|  \__,_|\__|_|_| |_|\__,_|
+
+(The Restaurant Game)
+
+by
+Taimo Peelo
+Michael Ngugi Michuki
+
+University of Tartu, ESTONIA
+Systems Modelling Course
+Fall 2014
+
+                            _                        
+ /\_|__|_._o|_   _|_ _  _ // \._  _ .__._|_o _ ._  _ 
+/--\|_ |_| ||_)|_||_(/__>/ \_/|_)(/_|(_| |_|(_)| |_> 
+                              |                      
+Added Classes:
+  class SimulationGenerator:
+    operations:
+	  Client +rndClient()
+	  Set<Client> +rndPopulation(Integer populationSize)
+	  Employee +rndEmployee(EmployeeType employeeType)
+	  Set<Employee> +rndStaff(Map<EmployeeType, Integer> employeeCounts)
+      Set<Integer> +rndCombination(Integer k, Integer n)
+	  Set<T> +rndCombination(Integer k, Set<T> things)
+	  String +rndPhoneNumber()
+	  String +rndForeName()
+	  String +rndSurname()
+	  String +rndTaxCode()
+
+  class GameController:
+    operations:
+	  +saveHighScoreList(HighScoreList highScoreList)
+	  HighScoreList +loadHighScoreList()
+
+Added Attributes:
+  to Game
+    + day : Integer
+ _            __                     
+| \ _._|_ _. (__|_._   __|_   .__  _ 
+|_/(_| |_(_| __)|_||_|(_ |_|_||(/__> 
+                                     
+JavaEnumeration:
+  EmployeeType (Barman, Chef, Waiter)
+  ExperienceLevel (Low, Medium, High)
+  QualityLevel (Low, High)
+
+List:
+  weeklyOrders: List<MealOrder>
+
+Set:
+  population: Set<Client>
+  employees : Set<Employee>
+
+SortedMap:
+  HighScoreList = SortedMap<Game, Player> (ordering defined by Game.score)
+ _                _          
+|_)_ _     _| _  /  _  _| _  
+| _>(/_|_|(_|(_) \_(_)(_|(/_ 
+                             
+SimulationGenerator class:
+  Client SimulationGenerator.rndClient():
+  Set<Client> +rndPopulation(Integer populationSize)
+  Employee +rndEmployee(EmployeeType employeeType)
+  Set<Employee> +rndStaff(Map<EmployeeType, Integer> employeeCounts)
+  Set<Integer> +rndCombination(Integer k, Integer n)
+  Set<T> +rndCombination(Integer k, Set<T> things)
+  String +rndPhoneNumber()
+  String +rndForeName()
+  String +rndSurname()
+  String +rndTaxCode()
+							 
+(game starts from Controller.main)
+
+# Assign Tables
+
+# Create Menu
+
+# De-serialize High Score List
+  de-serialize HighScoreList from saved file 'muratino-hs.ser'
+
+# Display High Score List(HighScoreList)
+  for each pair of (game, player) IN HighScoreList
+    display rank (index of pair)
+	display player name
+	display game score
+	display newline
+
+# Employee Salary (employee)
+  if (employee) is Waiter set 200 AS (baseSalary)
+  else set 300 AS (baseSalary)
+  if (employee) experience is Low
+    return (baseSalary)
+  else if (employee) experience is Medium
+    return (baseSalary) + 100
+  return (baseSalary) + 200
+
+# Game Day Simulation
+  set (#Semi-Random Table Combination(restaurant)) AS (occupiedTables)
+  set (#Semi-Random Client Combination(restaurant)) AS (visitingClients)
+  set 
+
+# End Of Game Day
+  display "Another business day has passed."
+  display "Budget available for the next day is: " and  (restaurant.availableBudget)
+
+# Exit Game
+  terminate game process
+
+# Expect User Input (pattern)
+  wait for user input AS (input)
+  if (input) does not match (pattern)
+    display (input) and " is not among valid values. Command again, master: "
+   return (#Expect User Input (pattern))
+  else 
+   return (input)
+  
+# Main
+  # Populate Clients
+  # Populate Employees
+  while (user has not chosen to exit the game)
+    # Show Player Options Menu
+    # Wait User Input
+    # React To User Input
+
+# Populate Clients
+  create Set<Client> AS (population)
+  while (population) contains < 18 Client's
+    create Client AS (client)
+	set (client) name to (#Semi-Random Name)
+	set (client) surname to (#Semi-Random Surname)
+	set (client) phone number to (#Semi-Random Phone Number)
+	set (client) tax code to (#Semi-Random Tax Code)
+	add (client) to (population)
+  return (population)
+
+# Populate Employees
+  create Set<Employee> AS (employees)
+  while (employees) contains < 3 Employee's
+    add (#Semi-Random Employee(Waiter)) to (employees))
+  add (#Semi-Random Employee(Barman)) to (employees))
+  add (#Semi-Random Employee(Chef)) to (employees))
+  return (employees)
+
+# Save High Score List
+  serialize HighScoreList into saved file 'muratino-hs.ser'
+
+# Random Combination(k, n)
+  create Set<Integer> of initial size k and no elements AS (combination)
+  if (k == n)
+    add 1..n to (combination)
+	return (combination)
+  else
+    while (combination) has less than k elements
+      add Random Integer from range (1..n) to (combination)
+    return (combination)
+
+# Random Combination of Things(k, Set<Thing> things)
+  set (#Random Combination(k, number of elements in (things))) AS (numberCombination)
+  for each (numericIndex) from (combination)
+    add (things) element at (numericIndex) to (result)
+  return (result)
+
+# Semi-Random Client Combination(restaurant)
+   if (restaurant.reputation) is >= 30
+     return (population)
+   if (restaurant.reputation) is < 15
+     return (# Random Combination of Things(4, (population)))
+   else
+     return (# Random Combination of Things(10, (population)))
+
+# Semi-Random Employee(employeeType)
+  create Employee AS (employee)
+  set (employee) name to (#Semi-Random Name)
+  set (employee) surname to (#Semi-Random Surname)
+  set (employee) experience to Low
+  set (employee) type to (employeeType)
+  set (employee) salary to (#Employee Salary (employee))
+  if (employeeType) is Chef
+    set (employee) tax code to (#Semi-Random Tax Code)
+  return (employee)
+
+# Semi-Random Phone Number
+  get random country code from predefined international calling country codes list AS (prefix)
+  generate random 8-digit number AS (suffix)
+  return concatenation of (prefix) and single whitespace and (suffix)
+
+# Semi-Random Name
+  return random element from pre-defined names List
+
+# Semi-Random Surname
+  return random element from pre-defined surnames List
+
+# Semi-Random Table Combination(restaurant)
+   if (restaurant.reputation) is >= 30
+     return (1..9)
+   if (restaurant.reputation) is < 15
+     return (#Random Combination(2, 9))
+   else
+     return (#Random Combination(5, 9))
+
+# Semi-Random Tax Code
+  return random 11-digit number
+
+# Show Player Options Menu
+  if (no Game ongoing)
+     display "1. Start New Game"
+	 display newline
+	 display "2. View High Score List"
+	 display newline
+	 display "42. Exit Game"
+	 display newline
+	 (#Expect User Input ("1|2|42")) AS (cmd)
+	 if (cmd) is 1
+	   (#Start Game)
+	 else if (cmd) is 2
+	   (#Show High Score List)
+	 else if (cmd) is 42
+	   (#Exit Game)
+  else TODO
+
+# Start Game
+  display "It is a beautiful autumn in a cold northern country of Estonia."
+  display newline
+  display "Almost all pale yellow leaves are fallen from birches and maples."
+  display newline
+  display "In the creeping winter students roam in their coats and hats."
+  display newline
+  display "In this setting, you have decided to open up a new restaurant."
+  display newline
+  display "What is your name, brave entrepreneur?"
+  (#Expect User Input("[a-zA-z]+\n")) AS (playerName)
+  display "How do you want to name your restaurant, " and (playerName) and "?"
+  (#Expect User Input("[a-zA-z]+\n")) AS (restaurantName)
+  display "What city will you open your restaurant in, " and (playerName) and "?"
+  (#Expect User Input("[a-zA-z]+\n")) AS (city)
+  display "What is the address where you have acquired the restaurant space, " and (playerName) and "?"
+  (#Expect User Input("[a-zA-z]+\n")) AS (restaurantAddress)
+  create new Player as (player)
+  set (player) name to (playerName)
+  create new Restaurant as (restaurant)
+  set (restaurant) name to (restaurantName)
+  set (restaurant) city to (city)
+  set (restaurant) address to (restaurantAddress)
+  set (restaurant) owner to (player)
+
+# Train Staff
+
+# View Game Statistics
+
+# Show High Score List
+  (#De-serialize High Score List) AS (highScoreList)
+  (# Display High Score List(highScoreList))
+  display "Press <Enter> to continue"
+  display newline
+  (#Expect User Input("\n"))
