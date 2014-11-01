@@ -38,24 +38,26 @@ private static String userInput;
 	   		restaurant.player = player;
 	   		
 	   		//Display Start Menu
-	   		if (game = null){
-	   			System.out.println("1.Start New Game");
-	   			System.out.println("2.View High Score List");
-	   			System.out.println("42.Exit Game");
+	   		if (game == null){
+	   			System.out.println(
+	   					"Welcome,"+ player.name +". "+ restaurant.name 
+	   							+ " has officially Opened in "
+	   							+ restaurant.city + ""
+	   					+ "\nSelect: "
+	   					+ "\n1.Start New Game"
+	   					+ "\n2.View High Score List"
+	   					+ "\n42.Exit Game");
+	   		}else{
+	   			
 	   		}
-	   		 	display "1. Start New Game"
-	   		     display newline
-	   		     display "2. View High Score List"
-	   		     display newline
-	   		     display "42. Exit Game"
-	   		     display newline
-	   		     (#Expect User Input ("1|2|42")) AS (cmd)
-	   		     if (cmd) is 1
-	   		   	(#Start Game)
-	   		     else if (cmd) is 2
-	   		   	(#Show High Score List)
-	   		     else if (cmd) is 42
-	   		   	(#Exit Game)
+//	   		     display newline
+//	   		     (#Expect User Input ("1|2|42")) AS (cmd)
+//	   		     if (cmd) is 1
+//	   		   	(#Start Game)
+//	   		     else if (cmd) is 2
+//	   		   	(#Show High Score List)
+//	   		     else if (cmd) is 42
+//	   		   	(#Exit Game)
 
 	   		
 	   		//simulate Day
