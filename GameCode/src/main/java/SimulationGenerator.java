@@ -1,5 +1,7 @@
 
 public class SimulationGenerator {
+
+	
 //	operations:
 //	      Client +rndClient()
 //	      Set<Client> +rndPopulation(Integer populationSize)
@@ -11,7 +13,9 @@ public class SimulationGenerator {
 //	      String +rndForeName()
 //	      String +rndSurname()
 //	      String +rndTaxCode()
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}	
 	
-	
-
 }

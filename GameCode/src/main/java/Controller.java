@@ -5,12 +5,16 @@ import java.io.InputStreamReader;
 
 public class Controller {
 private static String userInput;
-	
+	static Restaurant restaurant;
+	static Player player;
+	static Game game = null;
 	public static void main(String args[])
 	{
 			//Game Start
-			Restaurant restaurant = new Restaurant();
-			Player player  = new Player();
+			restaurant = new Restaurant();
+			player  = new Player();
+			
+			
 			System.out.println(
 			  "\n __  __                 _   _        	"
 	   		+ "\n|  \\/  |_   _ _ __ __ _| |_(_)_ __   __ _"
@@ -25,15 +29,38 @@ private static String userInput;
 	   		+ "\nWhat is your name, brave entrepreneur?");
 	   		//Set Player & Restaurant Name 
 			player.name = collectInput();
-	   		System.out.printf("What name do you want for your restaurant %s?",player.name);
+	   		System.out.println("What name do you want for your restaurant "+ player.name + "?");
 	   		restaurant.name = collectInput();
-	   		System.out.printf("What city will you open your restaurant in, %s?",player.name);
+	   		System.out.println("What city will you open your restaurant in," + player.name + "?");
 	   		restaurant.city = collectInput();
-	   		System.out.printf("What is the address of your restaurant, %s?",player.name);
+	   		System.out.println("What is the address of your restaurant, "+ player.name + "?");
 	   		restaurant.address = collectInput();
 	   		restaurant.player = player;
-	   		//
 	   		
+	   		//Display Start Menu
+	   		if (game = null){
+	   			System.out.println("1.Start New Game");
+	   			System.out.println("2.View High Score List");
+	   			System.out.println("42.Exit Game");
+	   		}
+	   		 	display "1. Start New Game"
+	   		     display newline
+	   		     display "2. View High Score List"
+	   		     display newline
+	   		     display "42. Exit Game"
+	   		     display newline
+	   		     (#Expect User Input ("1|2|42")) AS (cmd)
+	   		     if (cmd) is 1
+	   		   	(#Start Game)
+	   		     else if (cmd) is 2
+	   		   	(#Show High Score List)
+	   		     else if (cmd) is 42
+	   		   	(#Exit Game)
+
+	   		
+	   		//simulate Day
+	   		SimulationGenerator simulator = new SimulationGenerator();
+	   		simulator.start();
 	}
 
 	private static String collectInput() {
