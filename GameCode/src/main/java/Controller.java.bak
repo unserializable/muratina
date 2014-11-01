@@ -8,7 +8,6 @@ private static String userInput;
 	
 	public static void main(String args[])
 	{
-			//Game Start
 			Restaurant restaurant = new Restaurant();
 			Player player  = new Player();
 			System.out.println(
@@ -23,8 +22,7 @@ private static String userInput;
 	   		+ "\nIn this setting, you have decided to open up a new restaurant."
 	   		+ "\n+++++++++++++++++++++++++++++++++++++++++++++++++"
 	   		+ "\nWhat is your name, brave entrepreneur?");
-	   		//Set Player & Restaurant Name 
-			player.name = collectInput();
+	   		player.name = collectInput();
 	   		System.out.printf("What name do you want for your restaurant %s?",player.name);
 	   		restaurant.name = collectInput();
 	   		System.out.printf("What city will you open your restaurant in, %s?",player.name);
@@ -32,7 +30,6 @@ private static String userInput;
 	   		System.out.printf("What is the address of your restaurant, %s?",player.name);
 	   		restaurant.address = collectInput();
 	   		restaurant.player = player;
-	   		//
 	   		
 	}
 

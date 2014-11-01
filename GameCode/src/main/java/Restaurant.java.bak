@@ -1,6 +1,7 @@
 /**
  * @(#) Restaurant.java
  */
+
 public class Restaurant
 {
 	public String name;
@@ -17,10 +18,9 @@ public class Restaurant
 	
 	private Table Table;
 	
-	public Restaurant( ) {
+	public Restaurant() {
 		
 	}
-	
 	public double getCurrentBudget( )
 	{
 		return 0;
