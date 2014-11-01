@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * @(#) HighScoreList.java
@@ -16,14 +18,12 @@ public class HighScoreList
 	
 	public String latestScoresList;
 	
-
-	public HighScoreList() {
-		getScoreList();
-	}
-
 	public String getScoreList() {
 		try {
-			File file = new File("M:\\highscorelist.txt");
+			File file = new File("./../highscorelist.txt");
+			if(file.exists()== false) {
+				file.createNewFile();
+			}
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StringBuffer stringBuffer = new StringBuffer();
@@ -32,10 +32,8 @@ public class HighScoreList
 				stringBuffer.append(line);
 				stringBuffer.append("\n");
 			}
-			fileReader.close();
-			System.out.println("Contents of file:");
 			System.out.println(stringBuffer.toString());
-			latestScoresList = stringBuffer.toString();
+			fileReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,10 +44,12 @@ public class HighScoreList
 	
 	public String saveToScoreList(String playerScore){
 		try {
-			File file = new File("M:\\highscorelist.txt");
-			FileWriter fileWriter = new FileWriter(file);
-			fileWriter.write(playerScore);
-			fileWriter.flush();
+			File file = new File("./../highscorelist.txt");
+			if(file.exists()== false) {
+				file.createNewFile();
+			}
+			FileWriter fileWriter = new FileWriter(file,true);
+			fileWriter.append("\n"+playerScore);
 			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -39,7 +39,7 @@ private static String userInput;
 	   		restaurant.player = player;
 	   		System.out.println("+++++++++++++++++++++++++++++++");
 	   		viewStartMenu();
-	   		loadStartMenu(); 		
+	   		loadMenu(); 		
 	   		//simulate Day
 	   		SimulationGenerator simulator = new SimulationGenerator();
 	   		simulator.start();
@@ -57,7 +57,7 @@ private static String userInput;
 				+ "\n42.Exit Game");
 	}
 
-	private static void loadStartMenu() {
+	private static void loadMenu() {
 		//Display Start Menu
 		do {	
 					collectInput();
@@ -69,6 +69,8 @@ private static String userInput;
 						  	highScoreList = new HighScoreList();
 						  	highScoreList.saveToScoreList(player.name + restaurant.name + restaurant.availableBudget);
 					        highScoreList.getScoreList();
+					        System.out.println("\n 00. Home"
+					        		+ "\n 0. Back");
 					        break;
 					  case "42":
 						     System.out.println("Bye Bye");
