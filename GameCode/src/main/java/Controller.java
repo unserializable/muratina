@@ -8,6 +8,7 @@ private static String userInput;
 	static Restaurant restaurant;
 	static Player player;
 	static Game game = null;
+	static HighScoreList highScoreList;
 	public static void main(String args[])
 	{
 			//Game Start
@@ -36,40 +37,57 @@ private static String userInput;
 	   		System.out.println("What is the address of your restaurant, "+ player.name + "?");
 	   		restaurant.address = collectInput();
 	   		restaurant.player = player;
-	   		
-	   		//Display Start Menu
-	   		if (game == null){
-	   			System.out.println(
-	   					"Welcome,"+ player.name +". "+ restaurant.name 
-	   							+ " has officially Opened in "
-	   							+ restaurant.city + ""
-	   					+ "\nSelect: "
-	   					+ "\n1.Start New Game"
-	   					+ "\n2.View High Score List"
-	   					+ "\n42.Exit Game");
-	   		}else{
-	   			
-	   		}
-//	   		     display newline
-//	   		     (#Expect User Input ("1|2|42")) AS (cmd)
-//	   		     if (cmd) is 1
-//	   		   	(#Start Game)
-//	   		     else if (cmd) is 2
-//	   		   	(#Show High Score List)
-//	   		     else if (cmd) is 42
-//	   		   	(#Exit Game)
-
-	   		
+	   		System.out.println("+++++++++++++++++++++++++++++++");
+	   		viewStartMenu();
+	   		loadStartMenu(); 		
 	   		//simulate Day
 	   		SimulationGenerator simulator = new SimulationGenerator();
 	   		simulator.start();
+	}
+
+	private static void viewStartMenu() {
+		System.out.println(
+				""
+				+ "Welcome,"+ player.name +". "+ restaurant.name 
+						+ " has officially Opened in "
+						+ restaurant.city + ""
+				+ "\nSelect: "
+				+ "\n1.Start New Game"
+				+ "\n2.View High Score List"
+				+ "\n42.Exit Game");
+	}
+
+	private static void loadStartMenu() {
+		//Display Start Menu
+		do {	
+					collectInput();
+					switch (userInput) {
+					  case "1":
+						  	game = new Game();
+					        break;
+					  case "2": 
+						  	highScoreList = new HighScoreList();
+						  	highScoreList.saveToScoreList(player.name + restaurant.name + restaurant.availableBudget);
+					        highScoreList.getScoreList();
+					        break;
+					  case "42":
+						     System.out.println("Bye Bye");
+					         System.exit(0);// they are executed if variable ==  any of the above c's
+					        break;
+					  default:
+					        break;
+				}
+		}
+		while (true);
 	}
 
 	private static String collectInput() {
 		InputStreamReader input = new InputStreamReader(System.in);
 		BufferedReader reader = new BufferedReader(input);
 		try {
-			userInput = reader.readLine();
+			do {
+				userInput = reader.readLine();
+			} while (userInput.isEmpty());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
