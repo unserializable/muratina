@@ -8,7 +8,7 @@ public class Game {
 	private HighScoreList highScoreList;
 
 	public Player player;
-
+	public Restaurant restaurant;
 	public Integer day;
 	public static String userInput;
 
@@ -17,9 +17,9 @@ public class Game {
 		ArrayList<Waiter> WaitersList = new ArrayList<Waiter>();
 		Waiter w1 = new Waiter("Josh", "kola", "12345", 300,
 				ExperienceLevel.Low);
-		Waiter w2 = new Waiter("Josh", "kola", "12345", 300,
+		Waiter w2 = new Waiter("Molly", "Coola", "12345", 300,
 				ExperienceLevel.Low);
-		Waiter w3 = new Waiter("Josh", "kola", "12345", 300,
+		Waiter w3 = new Waiter("Kate", "Jones", "12345", 300,
 				ExperienceLevel.Low);
 		BarMan b1 = new BarMan("Bobo", "Coola", "1234", 400,
 				ExperienceLevel.Low);
@@ -32,15 +32,30 @@ public class Game {
 
 		// create tables
 		//initialize collection
-		player.restaurant.tables = new ArrayList<Table>();
+		restaurant.availableBudget = 10000;
+		restaurant.tables = new ArrayList<Table>();
 		for (int i = 0; i < 9; i++) {
 			Table table = new Table(i, null, false, null, null);
 			//add each table
-			player.restaurant.tables.add(table);
+			restaurant.tables.add(table);
 		}
-
+		
+		day = 1;
+		System.out.println("Lets go to the Chambers"
+				+ "\nDay : "+ day+""
+				+ "\nLets have a chat with Employees.");
 		// assigntables for each waiter
-		player.restaurant.assignTablesToServingWaiters(WaitersList);
+		restaurant.assignTablesToServingWaiters(WaitersList);
+		
+		//lets set the menu
+		System.out.println("Lets Set the Quality and the Price of our Menu");
+		Menu menu = new Menu();
+		
+//		int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7 };
+//        foreach (int number in numbers.TakeRandom(rnd, 3))
+//        {
+//            Console.WriteLine(number);
+//        }
 		
 		//user sets the quality & price of the Menu
 		
@@ -49,9 +64,14 @@ public class Game {
 		// populate
 	}
 
+	private void foreach(Class<Integer> class1) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void gameStart( ) {
 		player = new Player(null, null, highScoreList, null);
-		player.restaurant = new Restaurant();
+		restaurant = new Restaurant();
 		System.out
 				.println("\n __  __                 _   _        	"
 						+ "\n|  \\/  |_   _ _ __ __ _| |_(_)_ __   __ _"
@@ -68,18 +88,18 @@ public class Game {
 		player.name = collectInput();
 		System.out.println("What name do you want for your restaurant "
 				+ player.name + "?");
-		player.restaurant.name = collectInput();
+		restaurant.name = collectInput();
 		System.out.println("What city will you open your restaurant in,"
 				+ player.name + "?");
-		player.restaurant.city = collectInput();
+		restaurant.city = collectInput();
 		System.out.println("What is the address of your restaurant, "
 				+ player.name + "?");
-		player.restaurant.address = collectInput();
-		player.restaurant.player = player;
+		restaurant.address = collectInput();
+		//restaurant.player = player;
 		System.out.println("+++++++++++++++++++++++++++++++");
 		System.out.println("" + "Welcome," + player.name + ". "
-				+ player.restaurant.name + " has officially Opened in "
-				+ player.restaurant.city + "");
+				+ restaurant.name + " has officially Opened in "
+				+ restaurant.city + "");
 	}
 
 	public String collectInput( ) {

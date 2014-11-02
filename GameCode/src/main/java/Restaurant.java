@@ -56,42 +56,63 @@ public class Restaurant
 			System.out.println("Please select tables for:"+ waiter.getName());
 			int count = 1;
 			do {
-				System.out.println("+++++++++++++++++++++++");
-				
-				//++++++++++++++
-				//1.table 1: getservingWaiter
-				for (Table table : tables) {
-					//1. Table 1: 
-					int position = tables.indexOf(table)+1;
-					String _waitername = "Unassigned";
-					if(table.getServingWaiter() != null){
-						_waitername = table.getServingWaiter().getName();
-					}
-					System.out.println(position+".Table " + table.getTableNo() + ": "+_waitername );
-				}
-				
-				int parsedOut=0;
+				System.out.println("++++++++ Table: "+count+"+++++++++++++++");
+				printTablesAssignmentList();
+				int convertedInputString;
 				//if empty or less than 0 or greater than 9
 				//complain and make the user put it again
-				do {
-					//get input
-					game.collectInput();
-					//convert input to integer
-					parsedOut = Integer.parseInt(game.userInput);
-					//while parsedut is less than 0 or greater than 9
-					if( 9 < parsedOut || parsedOut < 1 ){
-						System.out.println("Please Input a value between 1 & 9"+count+"p:"+parsedOut);
-					}
-				} while (game.userInput.isEmpty());
+				convertedInputString = assignTablesByUserInput(game, count);
 				//then get the table based on the index
-				Table selectedTable = tables.get(parsedOut-1);
+				Table selectedTable = tables.get(convertedInputString-1);
 				//set the waiter
 				selectedTable.setServingWaiter(waiter);
 				count++;
-				
-			} while (count<3);
+			} while (count<=3);
 			count = 1;
-			
+		}
+		//view the final Assignment
+		printTablesAssignmentList();
+	}
+	/**
+	 * @param game
+	 * @param count
+	 * @return
+	 * collect user input,
+	 * input a value between 1 & 9 to select the table where the waiter
+	 * should be assigned
+	 * if input is empty request input
+	 * if input is > 9 or < 1 request input
+	 */
+	public int assignTablesByUserInput(Game game, int count) {
+		int parsedOut;
+		do {
+			//get input
+			game.collectInput();
+			//convert input to integer
+			parsedOut = Integer.parseInt(game.userInput);
+			//while parsedut is less than 0 or greater than 9
+			if( 9 < parsedOut || parsedOut < 1 ){
+				System.out.println("Please Input a value between 1 & 9"+count+"p:"+parsedOut);
+			}
+		} while (game.userInput.isEmpty() || (9 < parsedOut || parsedOut < 1));
+		return parsedOut;
+	}
+	/**
+	 * Print the Assignment of Each table to a waiter
+	 * Display every waiter that is assigned to a table
+	 */
+	public void printTablesAssignmentList() {
+		//++++++++++++++
+		//for each table print the table and available waiter
+		//1.table 1: getservingWaiter
+		for (Table table : tables) {
+			//1. Table 1: 
+			int position = tables.indexOf(table)+1;
+			String _waitername = "Unassigned";
+			if(table.getServingWaiter() != null){
+				_waitername = table.getServingWaiter().getName();
+			}
+			System.out.println(position+".Table " + table.getTableNo() + ": "+_waitername );
 		}
 	}
 	public double getCurrentBudget( )
