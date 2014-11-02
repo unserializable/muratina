@@ -3,8 +3,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * @(#) HighScoreList.java
@@ -13,7 +11,7 @@ import java.net.URL;
 public class HighScoreList
 {
 	private Player player;
-	
+
 	private Game game;
 	
 	public String latestScoresList;

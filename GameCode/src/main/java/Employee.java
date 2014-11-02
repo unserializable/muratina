@@ -15,7 +15,7 @@ public class Employee
 
 	public Employee(String name, String surname, String phoneNo, int salary,
 			ExperienceLevel experienceLevel) {
-		this.name = name;
+		this.setName(name);
 		this.surname = surname;
 		this.phoneNo = phoneNo;
 		this.salary = salary;
@@ -30,6 +30,14 @@ public class Employee
 	public boolean increaseExperience( )
 	{
 		return false;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

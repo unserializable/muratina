@@ -3,7 +3,8 @@ import java.util.ArrayList;
 /**
  * @(#) Table.java
  */
-public class Table {
+public class Table
+{
 	public Boolean getOccupied() {
 		return occupied;
 	}
@@ -12,11 +13,11 @@ public class Table {
 		this.occupied = occupied;
 	}
 
-	public ArrayList<Waiter> getServingWaiters() {
+	public ArrayList getServingWaiters() {
 		return servingWaiters;
 	}
 
-	public void setServingWaiters(ArrayList<Waiter> servingWaiters) {
+	public void setServingWaiters(ArrayList servingWaiters) {
 		this.servingWaiters = servingWaiters;
 	}
 
@@ -33,22 +34,23 @@ public class Table {
 	}
 
 	private Integer tableNo;
-
+	
 	private MealOrder mealOrder;
-
+	
 	private Boolean occupied;
-
-	ArrayList<Waiter> servingWaiters;
+	
+	ArrayList servingWaiters ;
 
 	private Waiter servingWaiter;
 
-	public Table(Integer tableNo, MealOrder mealOrder, Boolean occupied,
-			ArrayList<Waiter> servingWaiters, Waiter servingWaiter) {
+	public Table(Integer tableNo, MealOrder mealOrder, Boolean occupied, ArrayList servingWaiters,
+			Waiter servingWaiter) {
 		this.tableNo = tableNo;
 		this.mealOrder = mealOrder;
 		this.occupied = occupied;
 		this.servingWaiters = servingWaiters;
 		this.servingWaiter = servingWaiter;
 	}
-
+	
+	
 }
