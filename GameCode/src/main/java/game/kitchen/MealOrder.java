@@ -1,3 +1,8 @@
+package game.kitchen;
+import game.employees.Employee;
+import game.mealorder.Client;
+import game.mealorder.Table;
+
 /**
  * @(#) MealOrder.java
  */

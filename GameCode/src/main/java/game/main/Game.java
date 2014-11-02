@@ -1,3 +1,11 @@
+package game.main;
+import game.employees.BarMan;
+import game.employees.Chef;
+import game.employees.ExperienceLevel;
+import game.employees.Waiter;
+import game.kitchen.Menu;
+import game.mealorder.Table;
+
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

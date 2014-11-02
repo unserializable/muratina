@@ -1,12 +1,13 @@
+package game.employees;
 import java.util.ArrayList;
 
 /**
- * @(#) Chef.java
+ * @(#) BarMan.java
  */
-public class Chef extends Employee
+public class BarMan extends Employee
 {
 
-	public Chef(String name, String surname, String phoneNo, int salary,
+	public BarMan(String name, String surname, String phoneNo, int salary,
 			ExperienceLevel experienceLevel) {
 		super(name, surname, phoneNo, salary, experienceLevel);
 		// TODO Auto-generated constructor stub
@@ -43,7 +44,4 @@ public class Chef extends Employee
 		return super.getName();
 	}
 
-	private String taxCode;
-	
-	
 }

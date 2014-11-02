@@ -1,3 +1,8 @@
+package game.mealorder;
+
+import game.kitchen.MealOrder;
+import game.kitchen.Menu;
+
 /**
  * @(#) Client.java
  */

@@ -1,3 +1,5 @@
+package game.employees;
+
 /**
  * @(#) Waiter.java
  */

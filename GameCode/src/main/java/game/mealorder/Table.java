@@ -1,3 +1,7 @@
+package game.mealorder;
+import game.employees.Waiter;
+import game.kitchen.MealOrder;
+
 import java.util.ArrayList;
 
 /**
