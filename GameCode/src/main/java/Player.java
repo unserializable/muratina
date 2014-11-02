@@ -6,11 +6,11 @@ public class Player
 {
 	public String name;
 	
-	private Restaurant Restaurant;
+	public Restaurant restaurant;
 	
 	private HighScoreList score;
 	
-	private Game player;
+	private Player player;
 	
 	private Menu Menu;
 	

@@ -7,11 +7,6 @@ public class MealOrder
 	private Beverage drinkorder;
 	
 	private Dish foodorder;
-	
-	private ClientStatistics clientStatisics;
-	
-	private MealSatisfaction mealSatisfaction;
-	
 	private Table table;
 	
 	private Employee employee;

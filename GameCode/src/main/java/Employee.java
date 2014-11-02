@@ -1,24 +1,25 @@
 /**
  * @(#) Employee.java
  */
-
-public class Employee extends Person
+public class Employee
 {
-	private ExperienceLevel experience;
+	private String name;
+	
+	private String surname;
+	
+	private String phoneNo;
 	
 	private int salary;
 	
-	private MealOrder mealOrder;
-	
-	private TrainingCourse trainingCourse;
-	
-	private Table table;
-	
-	private EmployeeType employeeType;
-	
-	public void setServicedTables( Table tables )
-	{
-		
+	private ExperienceLevel experienceLevel;
+
+	public Employee(String name, String surname, String phoneNo, int salary,
+			ExperienceLevel experienceLevel) {
+		this.name = name;
+		this.surname = surname;
+		this.phoneNo = phoneNo;
+		this.salary = salary;
+		this.experienceLevel = experienceLevel;
 	}
 	
 	public ExperienceLevel getExperienceLevel( )

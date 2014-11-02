@@ -1,0 +1,13 @@
+/**
+ * @(#) BarMan.java
+ */
+
+public class BarMan extends Employee
+{
+
+	public BarMan(String name, String surname, String phoneNo, double earnings,
+			String taxCode) {
+		super(name, surname, phoneNo, earnings, taxCode);
+	}
+	
+}

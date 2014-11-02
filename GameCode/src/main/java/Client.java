@@ -1,30 +1,23 @@
 /**
  * @(#) Client.java
  */
-
-public class Client extends Person
+public class Client
 {
-	public ClientStatistics getClientStatistics() {
-		return clientStatistics;
-	}
-
-	public Integer getAvgDishCalorieCount() {
+	public Integer getAvgDishCalorieCount( ) {
 		return avgDishCalorieCount;
 	}
 
-	public Integer getAvgBeverageVolume() {
+	public Integer getAvgBeverageVolume( ) {
 		return avgBeverageVolume;
 	}
 
-	public double getTotalMoneySpent() {
+	public double getTotalMoneySpent( ) {
 		return totalMoneySpent;
 	}
 
-	public String getTaxCode() {
+	public String getTaxCode( ) {
 		return taxCode;
 	}
-
-	private ClientStatistics clientStatistics;
 	
 	private Integer avgDishCalorieCount;
 	
@@ -33,6 +26,13 @@ public class Client extends Person
 	private double totalMoneySpent;
 	
 	private String taxCode;
+	
+	
+
+	private MealOrder mealOrder;
+	
+	
+	private Menu menu;
 	
 	
 }

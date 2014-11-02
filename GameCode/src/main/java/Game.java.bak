@@ -32,14 +32,14 @@ public class Game
 		Employeelist.add(b1);
 		Employeelist.add(c1);
 		
-		//create tables
-		restaurant = new Restaurant();
+		//create 
+		Restaurant restaurant = new Restaurant();
 		for (int i = 0; i < 9; i++) {
 			Table table = new Table(i, null, false, null, null);
 			restaurant.tables.add(table);
 		}
 		
-		//assigntables
+		
 		do{
 			
 		}while(true);

@@ -1,0 +1,15 @@
+/**
+ * @(#) Chef.java
+ */
+
+public class Chef extends Employee
+{
+	public Chef(String name, String surname, String phoneNo, double earnings,
+			String taxCode) {
+		super(name, surname, phoneNo, earnings, taxCode);
+	}
+
+	private String taxCode;
+	
+	
+}

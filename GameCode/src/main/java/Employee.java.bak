@@ -1,0 +1,58 @@
+import java.util.ArrayList;
+
+/**
+ * @(#) Employee.java
+ */
+public class Employee
+{
+	private String name;
+	
+	private String surname;
+	
+	private String phoneNo;
+	
+	private double earnings;
+	
+	private ExperienceLevel experience;
+	
+	private int salary;
+	
+	private MealOrder mealOrder;
+	
+	private Table table;
+	
+	private EmployeeType employeeType;
+	
+	ArrayList employeeList;
+	
+	private ExperienceLevel experienceLevel;
+	
+	public Employee(String name, String surname, String phoneNo,
+			double earnings, ExperienceLevel experience, int salary,
+			MealOrder mealOrder, Table table, EmployeeType employeeType,
+			ArrayList employeeList, ExperienceLevel experienceLevel) {
+		this.name = name;
+		this.surname = surname;
+		this.phoneNo = phoneNo;
+		this.earnings = earnings;
+		this.experience = experience;
+		this.salary = salary;
+		this.mealOrder = mealOrder;
+		this.table = table;
+		this.employeeType = employeeType;
+		this.employeeList = employeeList;
+		this.experienceLevel = experienceLevel;
+	}
+
+	public ExperienceLevel getExperienceLevel( )
+	{
+		return null;
+	}
+	
+	public boolean increaseExperience( )
+	{
+		return false;
+	}
+	
+	
+}
