@@ -38,6 +38,9 @@ Added Classes:
 	  +saveHighScoreList(HighScoreList highScoreList)
 	  HighScoreList +loadHighScoreList()
 
+Added Operations:
+  Integer +getTrainingCost to Employee
+
 Added Attributes:
   to Game
     + day : Integer
@@ -66,7 +69,7 @@ SortedMap:
 ///////////////////////////////////
 SimulationGenerator
 ///////////////////////////////////
-  SimulationGenerator.rndClient():
+  Client +rndClient():
     create Client AS (client)
 	set (client) name to (SimulationGenerator.rndForeName())
 	set (client) surname to (SimulationGenerator.rndSurname())
@@ -129,7 +132,40 @@ SimulationGenerator
 
   String +rndTaxCode():
     return (random 11-digit string)
- // END OF SimulationGenerator
+///////////////////////////////////
+END OF SimulationGenerator
+///////////////////////////////////
+
+///////////////////////////////////
+Employee
+///////////////////////////////////
+  integer +getTrainingCost():
+    if (employee) type is not Waiter OR Chef OR Barman
+	  throw Exception
+	else
+	  if (employee) type is Waiter
+	    return 800
+	  else
+	    return 1200
+
+  boolean +increaseExperience():
+    if (employee) experience is not Low OR Medium
+	  throw Exception
+	else if (employee) experience is Low
+	  set (employee) experience to Medium
+	else if (employee) experience is Medium
+	  set (employee) experience to High
+
+  integer +getSalary():
+    baseSalary = 200 if (employee) is Waiter else 300
+    if (employee) experience is High
+      return (baseSalary) + 200
+    else if (employee) experience is Medium
+      return (baseSalary) + 100
+    return (baseSalary)
+///////////////////////////////////
+END OF Employee
+///////////////////////////////////
 							 
 (game starts from Controller.main)
 
@@ -148,14 +184,6 @@ SimulationGenerator
 	display player name
 	display game score
 	display newline
-
-# Employee Salary (employee)
-  baseSalary = 200 if (employee) is Waiter else 300
-  if (employee) experience is High
-    return (baseSalary)+ 200
-  else if (employee) experience is Medium
-    return (baseSalary) + 100
-  return (baseSalary)
 
 # Game Day Simulation
   set (#Semi-Random Table Combination(restaurant)) AS (occupiedTables)
@@ -218,7 +246,10 @@ SimulationGenerator
 	   (#Show High Score List)
 	 else if (cmd) is 42
 	   (#Exit Game)
-  else TODO
+  else if (not end of month AND restaurant.availableBudget < 0)
+     display "Game has ended with a bankruptcy, funds missing" AND (-restaurant.availableBudget) AND " EUR"
+  else if (End of month has ended and restaurant.availableBudget is < 0)
+  else if ()
 
 # Start Game
   display "It is a beautiful autumn in a cold northern country of Estonia."

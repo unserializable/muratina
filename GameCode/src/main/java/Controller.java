@@ -40,8 +40,6 @@ private static String userInput;
 	   		viewStartMenu();
 	   		loadMenu(); 		
 	   		//simulate Day
-	   		SimulationGenerator simulator = new SimulationGenerator();
-	   		simulator.start();
 	}
 
 	private static void viewStartMenu() {
