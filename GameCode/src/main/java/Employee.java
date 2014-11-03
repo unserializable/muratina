@@ -9,6 +9,8 @@ public class Employee {
 	private String surname;
 
 	private String phoneNo;
+	
+	private int satisfactionRate;
 
 	private int salary;
 
@@ -20,6 +22,14 @@ public class Employee {
 		this.phoneNo = phoneNo;
 		this.salary = salary;
 		this.experienceLevel = experienceLevel;
+	}
+
+	public int getSatisfactionRate() {
+		return satisfactionRate;
+	}
+
+	public void setSatisfactionRate(int satisfactionRate) {
+		this.satisfactionRate = satisfactionRate;
 	}
 
 	public ExperienceLevel getExperienceLevel( ) {

@@ -22,6 +22,9 @@ public class Game {
 			System.out.println("Lets go to the Kitchen." + "\nDay : " + day
 					+ "" + "\nLets have a chat with All Waiters.");
 
+			//set up tables
+			restaurant.setUpTables();
+			
 			// assign tables to each waiter
 			restaurant.assignTablesToServingWaiters();
 
@@ -46,7 +49,8 @@ public class Game {
 				displayWeeklyMenu(menu);
 				
 				//pay Supplier on Day 7
-				//restaurant.availableBudget = restaurant.availableBudget- 100;
+				if ((day == 1) || (day == 7) || (day == 14) || (day == 21))
+					restaurant.availableBudget = restaurant.availableBudget- 100;
 				//each day we have 18 different clients selected.
 				
 			}
@@ -64,39 +68,7 @@ public class Game {
 			restaurant.receiveClients();
 			
 			//clients sit down on each table
-			
-			
-			for (Table table : restaurant.tables) {
-				int count = 0;
-				do {
-					//clients order a meal
-					for (MenuItem menuitem : menu.menuItems) {
-						// a meal is a dish and a beverage
-						MealOrder mealorder = new MealOrder();
-						if (menuitem.getClass() == Beverage.class) {
-							mealorder.orderedBeverage = (Beverage) menuitem;
-						} else if (menuitem.getClass() == Dish.class) {
-							mealorder.orderedDish = (Dish) menuitem;
-						}
-						Waiter waiter = table.getServingWaiter();
-						System.out.println("\n"
-								+ "\n=========================================="
-								+ "\n" + waiter.getName() + " just received two orders"
-								+ "\n------------------------------------------------"
-								+ "\n                 Table : " + table.getTableNo()
-								+ "\n------------------------------------------------"
-								+ "\n Beverage :" + mealorder.orderedBeverage.name 
-								+ "\n Drinks   :" + mealorder.orderedDish.name
-								+ "\n------------------------------------------------"
-								+ "" + waiter.getName() + "just served the clientss on Table" + table.getTableNo()
-								+ "\n They are eating like"
-								+ "\n=========================================="
-								);
-						count++;
-					}
-				} while (count < 2);
-
-			}
+			restaurant.serveMealOrdersToClients(menu);
 			
 			
 			day++;
@@ -113,6 +85,10 @@ public class Game {
 		// populate clients to restaurant
 		// populate
 	}
+
+
+
+	
 
 
 

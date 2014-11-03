@@ -20,15 +20,19 @@ public class Waiter extends Employee
 		switch (super.getExperienceLevel()) {
 		case Low:
 			super.setSalary(200);
+			super.setSatisfactionRate(60);
 			break;
 		case Medium:
 			super.setSalary(300);
+			super.setSatisfactionRate(80);
 			break;
 		case High:
 			super.setSalary(200);
+			super.setSatisfactionRate(90);
 			break;
 		default:
 			super.setSalary(200);
+			super.setSatisfactionRate(40);
 			break;
 		}
 		return super.increaseExperience();

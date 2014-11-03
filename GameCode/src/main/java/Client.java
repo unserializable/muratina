@@ -1,36 +1,35 @@
 
-
 import java.util.Random;
 
 /**
  * @(#) Client.java
  */
-public class Client
-{
-	private String name;
-	private String surname;
-	private String phoneNumber;
+public class Client {
+	private Integer avgBeverageVolume;
 	
 	private Integer avgDishCalorieCount;
 	
-	private Integer avgBeverageVolume;
-	
-	private double totalMoneySpent;
-	
+	private MealOrder mealOrder;
+
+	private Menu menu;
+
+	private String name;
+
+	private String phoneNumber;
+
+	private String surname;
+
 	private String taxCode;
 	
-	
+	private int satisfaction;
 
-	private MealOrder mealOrder;
-	
-	
+	private double totalMoneySpent;
+
 	public Client() {
 		generateClientData();
 	}
 
-	private Menu menu;
-	
-	public void generateClientData(){
+	public void generateClientData() {
 		Random r = new Random();
 
 		int i1 = r.nextInt(8); // returns random number between 0 and 7
@@ -41,30 +40,87 @@ public class Client
 
 		phoneNumber = String.format("%d%d%d-%03d-%04d", i1, i2, i3, i4, i5);
 		taxCode = String.format("tc-%03d-%04d", i1, i2, i3, i4, i5);
-		
-		
-		String[] names = {"Sophia","Emma","Olivia","Isabella","Mia","Ava","Lily","Zoe","Emily","Chloe","Layla","Madison","Madelyn","Abigail"};
-		String[] surnames = {"Addison","Riley","Harper","Aria","Arianna","Mackenzie","Lila","Evelyn","Adalyn","Grace","Brooklyn","Ellie","Anna"};
-		
+
+		String[] names = { "Sophia", "Emma", "Olivia", "Isabella", "Mia",
+				"Ava", "Lily", "Zoe", "Emily", "Chloe", "Layla", "Madison",
+				"Madelyn", "Abigail" };
+		String[] surnames = { "Addison", "Riley", "Harper", "Aria", "Arianna",
+				"Mackenzie", "Lila", "Evelyn", "Adalyn", "Grace", "Brooklyn",
+				"Ellie", "Anna" };
+
 		int index = (int) (Math.random() * names.length);
 		name = names[index];
 		surname = surnames[index];
-		
-	}
-	public Integer getAvgDishCalorieCount( ) {
-		return avgDishCalorieCount;
+
 	}
 
-	public Integer getAvgBeverageVolume( ) {
+	public Integer getAvgBeverageVolume() {
 		return avgBeverageVolume;
 	}
 
-	public double getTotalMoneySpent( ) {
+	public Integer getAvgDishCalorieCount() {
+		return avgDishCalorieCount;
+	}
+
+	public MealOrder getMealOrder() {
+		return mealOrder;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public String getTaxCode() {
+		return taxCode;
+	}
+
+	public double getTotalMoneySpent() {
 		return totalMoneySpent;
 	}
 
-	public String getTaxCode( ) {
-		return taxCode;
+	public void setAvgBeverageVolume(Integer avgBeverageVolume) {
+		this.avgBeverageVolume = avgBeverageVolume;
+	}
+
+	public void setAvgDishCalorieCount(Integer avgDishCalorieCount) {
+		this.avgDishCalorieCount = avgDishCalorieCount;
+	}
+
+	public void setMealOrder(MealOrder mealOrder) {
+		this.mealOrder = mealOrder;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public void setTaxCode(String taxCode) {
+		this.taxCode = taxCode;
+	}
+
+	public void setTotalMoneySpent(double totalMoneySpent) {
+		this.totalMoneySpent = totalMoneySpent;
 	}
 	
+	/**
+	 * Randomize client satisfaction
+	 */
+	public int getClientSatisfactionEvaluation(int percentageAverage) {
+		int num = (int) (Math.random() * 100);
+		int satistfaction = 0;
+		if(num < percentageAverage)
+			satistfaction = 1;
+		else if (num > percentageAverage)
+			satistfaction =  -1;
+		return satistfaction;
+	}
+
 }

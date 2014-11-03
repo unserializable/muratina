@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 
 /**
@@ -41,22 +40,22 @@ public class Restaurant {
 	public double availableBudget;
 
 	public Player player;
-	
+
 	public ArrayList<Client> clients;
 
 	public ArrayList<Table> tables;
 
 	public ArrayList<Employee> employees;
-	
+
 	public ArrayList<Waiter> waitersList;
 
 	public Restaurant() {
-		//initial budget is 10000
-		//initial reputation is 15
+		// initial budget is 10000
+		// initial reputation is 15
 		availableBudget = 10000;
 		reputation = 15;
 		tables = new ArrayList<Table>();
-		setUpTables();
+		//setUpTables();
 		createEmployees();
 	}
 
@@ -64,14 +63,23 @@ public class Restaurant {
 	 * Set Up the tables add 9 tables to the Restaurant
 	 */
 	public void setUpTables() {
-		for (int i = 1; i < 10; i++) {
+		int occupiedTables = 0;
+		if(reputation >= 30)
+			occupiedTables = 9;
+		else if(reputation <30 && reputation >=15)
+			occupiedTables = 5;
+		else if(reputation <15)
+			occupiedTables = 2;
+		
+		for (int i = 0; i < occupiedTables; i++) {
+			int tableNo = i + 1;
 			Table table = new Table(i, null, false, null, null);
 			// add each table
 			tables.add(table);
 		}
 	}
 
-	public void receiveClients(){
+	public void receiveClients() {
 		for (Table table : tables) {
 			int clientCount = 0;
 			do {
@@ -80,9 +88,97 @@ public class Restaurant {
 				table.clients = new ArrayList<Client>();
 				table.clients.add(client);
 				clientCount++;
-			} while (clientCount<2);
+			} while (clientCount < 2);
+
 		}
 	}
+
+	/**
+	 * @param menu
+	 */
+	public void serveMealOrdersToClients(Menu menu) {
+		for (Table table : tables) {
+			int count = 0;
+
+			// clients order a meal
+			do {
+					//select random menu item
+					int index = (int) (Math.random() * menu.menuItems.size());
+					Object selectedMenuItem = new Object();
+					selectedMenuItem = menu.menuItems.get(index);
+					// a meal is a dish and a beverage
+					MealOrder mealorder = new MealOrder();
+					if (selectedMenuItem.getClass() == Beverage.class) {
+						mealorder.orderedBeverage = (Beverage) selectedMenuItem;
+					} else if (selectedMenuItem.getClass() == Dish.class) {
+						mealorder.orderedDish = (Dish) selectedMenuItem;
+					}
+					// the order is prepared and served
+					//
+					Waiter waiter = table.getServingWaiter();
+					System.out
+							.println("\n"
+									+ "\n=========================================="
+									+ "\n------------------------------------------------"
+									+ "\n-------Table : "
+									+ table.getTableNo()
+									+ "-------"
+									+ "\n"
+									+ waiter.getName()
+									+ " just received two orders"
+									+ "\n------------------------------------------------"
+									+ "\n Beverage :"
+									+ mealorder.orderedBeverage.name
+									+ "\n Drinks   :"
+									+ mealorder.orderedDish.name
+									+ "\n------------------------------------------------"
+									+ "\n"
+									+ waiter.getName()
+									+ "just served "
+									+ "\n"
+									+ table.clients.get(0).getName()
+									+ "\n"
+									+ table.clients.get(1).getName()
+									+ "\n ..........eating magestically............"
+									+ "\n==========================================");
+
+					int employeePercentageAverage = 0;
+					// lets get the satisfaction of clients
+					for (Employee employee : employees) {
+
+						if (employee.getClass() == BarMan.class) {
+							// calculate probability of client being satisfied
+							employee.getExperienceLevel();
+							employeePercentageAverage += employee
+									.getSatisfactionRate();
+						} else if (employee.getClass() == Waiter.class) {
+							// calculate probability of client being satisfied
+							employee.getExperienceLevel();
+							employeePercentageAverage += employee
+									.getSatisfactionRate();
+						} else if (employee.getClass() == Chef.class) {
+							// calculate probability of client being satisfied
+							employee.getExperienceLevel();
+							employeePercentageAverage += employee
+									.getSatisfactionRate();
+						}
+
+					}
+					// set client satisfaction
+					employeePercentageAverage = employeePercentageAverage / 5;
+					int clientSatisfaction = 0;
+					for (Client client : table.clients) {
+						clientSatisfaction = client
+								.getClientSatisfactionEvaluation(employeePercentageAverage);
+						reputation += clientSatisfaction;
+					}
+					count++;
+
+				} while (count < 2);
+
+		}
+	}
+
 	/**
 	 * @param WaitersList
 	 */
@@ -114,8 +210,7 @@ public class Restaurant {
 			count = 1;
 		}
 		// view the final Assignment
-		System.out.println(""
-				+ "\n==================================="
+		System.out.println("" + "\n==================================="
 				+ "\nGreat Everyone has been Assigned to a Table!"
 				+ "\nHere is the Roster"
 				+ "\n===================================");
@@ -160,10 +255,11 @@ public class Restaurant {
 			String _waiterLevel = "Unassigned";
 			if (table.getServingWaiter() != null) {
 				_waitername = table.getServingWaiter().getName();
-				_waiterLevel = table.getServingWaiter().getExperienceLevel().toString();
+				_waiterLevel = table.getServingWaiter().getExperienceLevel()
+						.toString();
 			}
 			System.out.println(position + ".Table " + table.getTableNo() + ": "
-					+ _waitername+ ": Level: " + _waiterLevel);
+					+ _waitername + ": Level: " + _waiterLevel);
 		}
 	}
 
