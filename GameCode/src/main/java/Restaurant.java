@@ -35,9 +35,11 @@ public class Restaurant {
 
 	public String city;
 
-	public Integer reputation;
+	public double reputation;
 
 	public double availableBudget;
+	
+	public double employeePercentageAverage;
 
 	public Player player;
 
@@ -102,17 +104,46 @@ public class Restaurant {
 
 			// clients order a meal
 			do {
-					//select random menu item
-					int index = (int) (Math.random() * menu.menuItems.size());
-					Object selectedMenuItem = new Object();
-					selectedMenuItem = menu.menuItems.get(index);
-					// a meal is a dish and a beverage
-					MealOrder mealorder = new MealOrder();
-					if (selectedMenuItem.getClass() == Beverage.class) {
-						mealorder.orderedBeverage = (Beverage) selectedMenuItem;
-					} else if (selectedMenuItem.getClass() == Dish.class) {
-						mealorder.orderedDish = (Dish) selectedMenuItem;
+					double priceDifference = 0;
+					StringBuilder selecteditems = new StringBuilder();
+					//for each client				
+					for (Client client : table.clients) {
+						ArrayList<MenuItem> items = new ArrayList<MenuItem>();
+						//select random menu item	
+						MealOrder mealOrder =  new MealOrder();
+						selecteditems.append("Client:" + client.getName());
+						//select random beverage
+						do {
+							int index = (int) (Math.random() * menu.menuItems.size());
+							MenuItem selectedMenuItem = menu.menuItems.get(index);
+							if (selectedMenuItem.getClass() == Beverage.class) {
+								mealOrder.orderedBeverage = (Beverage) selectedMenuItem;
+								priceDifference = selectedMenuItem.price - selectedMenuItem.ingredientCost;
+								if(priceDifference >=3)
+									priceDifference = Math.round(priceDifference*100.0);
+								break;
+							} 
+						} while (true);
+						selecteditems.append("-----------------------------------");
+						selecteditems.append("Beverage: "+ mealOrder.getBeverage().name);
+						//select random dish
+						do {
+							int index = (int) (Math.random() * menu.menuItems.size());
+							MenuItem selectedMenuItem = menu.menuItems.get(index);
+							if (selectedMenuItem.getClass() == Dish.class) {
+								mealOrder.orderedDish = (Dish) selectedMenuItem;
+								priceDifference = selectedMenuItem.price - selectedMenuItem.ingredientCost;
+								double percentagetoDecrease =0;
+								if(priceDifference >=3)
+									priceDifference = Math.round(priceDifference*100.0);
+									percentagetoDecrease = priceDifference * 10;
+								break;
+							} 
+						} while (true);
+						selecteditems.append("Dish : "+ mealOrder.getDish().name);
+						selecteditems.append("-----------------------------------");
 					}
+					
 					// the order is prepared and served
 					//
 					Waiter waiter = table.getServingWaiter();
@@ -127,49 +158,19 @@ public class Restaurant {
 									+ waiter.getName()
 									+ " just received two orders"
 									+ "\n------------------------------------------------"
-									+ "\n Beverage :"
-									+ mealorder.orderedBeverage.name
-									+ "\n Drinks   :"
-									+ mealorder.orderedDish.name
-									+ "\n------------------------------------------------"
-									+ "\n"
-									+ waiter.getName()
-									+ "just served "
-									+ "\n"
-									+ table.clients.get(0).getName()
-									+ "\n"
-									+ table.clients.get(1).getName()
+									+ selecteditems
 									+ "\n ..........eating magestically............"
 									+ "\n==========================================");
 
-					int employeePercentageAverage = 0;
-					// lets get the satisfaction of clients
-					for (Employee employee : employees) {
-
-						if (employee.getClass() == BarMan.class) {
-							// calculate probability of client being satisfied
-							employee.getExperienceLevel();
-							employeePercentageAverage += employee
-									.getSatisfactionRate();
-						} else if (employee.getClass() == Waiter.class) {
-							// calculate probability of client being satisfied
-							employee.getExperienceLevel();
-							employeePercentageAverage += employee
-									.getSatisfactionRate();
-						} else if (employee.getClass() == Chef.class) {
-							// calculate probability of client being satisfied
-							employee.getExperienceLevel();
-							employeePercentageAverage += employee
-									.getSatisfactionRate();
-						}
-
-					}
-					// set client satisfaction
-					employeePercentageAverage = employeePercentageAverage / 5;
-					int clientSatisfaction = 0;
+					//get employee satisfaction percentage average
+					employeePercentageAverage = updateEmployeeSatisfactionPercentageAverage();
+					
+					double clientSatisfaction = 0;
 					for (Client client : table.clients) {
 						clientSatisfaction = client
 								.getClientSatisfactionEvaluation(employeePercentageAverage);
+						//menu
+						clientSatisfaction = Math.round(clientSatisfaction*100.0);
 						reputation += clientSatisfaction;
 					}
 					count++;
@@ -177,6 +178,38 @@ public class Restaurant {
 				} while (count < 2);
 
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public double updateEmployeeSatisfactionPercentageAverage() {
+		employeePercentageAverage = 0;
+		// lets get the satisfaction of clients
+		for (Employee employee : employees) {
+
+			if (employee.getClass() == BarMan.class) {
+				// calculate probability of client being satisfied
+				employee.getExperienceLevel();
+				employeePercentageAverage += employee
+						.getSatisfactionRate();
+			} else if (employee.getClass() == Waiter.class) {
+				// calculate probability of client being satisfied
+				employee.getExperienceLevel();
+				employeePercentageAverage += employee
+						.getSatisfactionRate();
+			} else if (employee.getClass() == Chef.class) {
+				// calculate probability of client being satisfied
+				employee.getExperienceLevel();
+				employeePercentageAverage += employee
+						.getSatisfactionRate();
+			}
+
+		}
+
+		// set client satisfaction
+		employeePercentageAverage = employeePercentageAverage / 5;
+		return employeePercentageAverage;
 	}
 
 	/**
@@ -280,7 +313,12 @@ public class Restaurant {
 		waitersList.add(w2);
 		waitersList.add(w3);
 	}
-
+	public double deductSalaries(){
+		return availableBudget;
+	}
+	public double paySuppliers(Menu menu){
+		return availableBudget = availableBudget - menu.gettotalIngredientsCost();
+	}
 	public double getCurrentBudget() {
 		return 0;
 	}

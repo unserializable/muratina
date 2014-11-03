@@ -113,9 +113,9 @@ public class Client {
 	/**
 	 * Randomize client satisfaction
 	 */
-	public int getClientSatisfactionEvaluation(int percentageAverage) {
-		int num = (int) (Math.random() * 100);
-		int satistfaction = 0;
+	public double getClientSatisfactionEvaluation(double percentageAverage) {
+		double num = (Math.random() * 100);
+		double satistfaction = 0;
 		if(num < percentageAverage)
 			satistfaction = 1;
 		else if (num > percentageAverage)

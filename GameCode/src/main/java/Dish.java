@@ -10,21 +10,17 @@ public class Dish extends MenuItem
 	
 	private Menu menu;
 	
-	private double ingredientCost;
-	
-	private MealOrder mealOrder;
-
-	public Dish(String name, double price, QualityLevel quality) {
-		super(name, price, quality);
+	public Dish() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Dish(String name, double price, QualityLevel quality,
-			Integer calorieCount, double ingredientCost) {
-		super(name, price, quality);
-		this.calorieCount = calorieCount;
-		this.ingredientCost = ingredientCost;
+			double ingredientCost) {
+		super(name, price, quality, ingredientCost);
+		// TODO Auto-generated constructor stub
 	}
+
+	private MealOrder mealOrder;
 	
 	/**
 	 * @param beverage

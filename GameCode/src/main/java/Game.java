@@ -37,7 +37,7 @@ public class Game {
 			Menu menu = new Menu();
 
 			if ((day == 1) || (day == 7) || (day == 14) || (day == 21)) {
-				// if day 1, 7, 14, 21set menu items
+				// if day 1, 7, 14, 21 set menu items
 				
 				// lets add dishes
 				createDishes(menu);
@@ -48,9 +48,11 @@ public class Game {
 				//lets see the menu
 				displayWeeklyMenu(menu);
 				
-				//pay Supplier on Day 7
-				if ((day == 1) || (day == 7) || (day == 14) || (day == 21))
-					restaurant.availableBudget = restaurant.availableBudget- 100;
+				//pay Supplier on Day 7 for the total ingredients Costs
+				if ((day == 7) || (day == 14) || (day == 21) || day == 30)
+					restaurant.availableBudget = restaurant.deductSalaries();
+					restaurant.paySuppliers(menu);
+					
 				//each day we have 18 different clients selected.
 				
 			}
@@ -73,17 +75,6 @@ public class Game {
 			
 			day++;
 		} while (day <= 30);
-
-		// int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7 };
-		// foreach (int number in numbers.TakeRandom(rnd, 3))
-		// {
-		// Console.WriteLine(number);
-		// }
-
-		// user sets the quality & price of the Menu
-
-		// populate clients to restaurant
-		// populate
 	}
 
 
@@ -177,7 +168,7 @@ public class Game {
 	public void createDishes(Menu menu) {
 		do {
 			int position = menu.menuItems.size()+1;
-			Dish dish = new Dish("Empty", 0, QualityLevel.Low, 0, 0);
+			Dish dish = new Dish("Empty", 0, QualityLevel.Low, 0);
 			System.out.println("Enter the name of your Dish "+ position +",Player: "+ player.name
 					+ "?");
 			dish.name = collectInput();
@@ -197,13 +188,12 @@ public class Game {
 
 	/**
 	 * @param menu
-	 *            create the beverages add them to the menu
+	 *  create the beverages add them to the menu
 	 */
 	public void createBeverages(Menu menu) {
 		do {
 			int position = menu.menuItems.size()+1;
-			Beverage beverage = new Beverage("Empty", 0, QualityLevel.Low, 100,
-					100);
+			Beverage beverage = new Beverage("Empty", 0, QualityLevel.Low, 100);
 			System.out.println("Enter the name of your Beverage " +position+",Player: "+ player.name
 					+ "?");
 			beverage.name = collectInput();

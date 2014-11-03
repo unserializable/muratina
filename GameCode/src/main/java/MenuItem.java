@@ -9,6 +9,16 @@ public abstract class MenuItem {
 	public double price;
 
 	public QualityLevel quality;
+	
+	public static double ingredientCost;
+	
+	public double getIngredientCost() {
+		return ingredientCost;
+	}
+
+	public static void setIngredientCost(double ingredientCost) {
+		MenuItem.ingredientCost = ingredientCost;
+	}
 
 	public String getName() {
 		return name;
@@ -38,10 +48,11 @@ public abstract class MenuItem {
 		this.quality = quality;
 	}
 
-	public MenuItem(String name, double price, QualityLevel quality) {
+	public MenuItem(String name, double price, QualityLevel quality, double ingredientCost) {
 		this.name = name;
 		this.price = price;
 		this.quality = quality;
+		this.ingredientCost = ingredientCost;
 	}
 
 }

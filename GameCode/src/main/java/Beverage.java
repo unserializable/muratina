@@ -10,21 +10,16 @@ public class Beverage extends MenuItem
 	
 	private Menu menu;
 	
-	private double ingredientCost;
-	
-	private MealOrder mealOrder;
 	
 	public Beverage(String name, double price, QualityLevel quality) {
-		super(name, price, quality);
+		super(name, price, quality,ingredientCost);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Beverage(String name, double price, QualityLevel quality,
-			Integer volume, double ingredientCost) {
-		super(name, price, quality);
+			Integer volume) {
+		super(name, price, quality,ingredientCost);
 		this.volume = volume;
-		this.ingredientCost = ingredientCost;
-		this.mealOrder = mealOrder;
 	}
 	/**
 	 * @param beverage
