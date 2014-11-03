@@ -16,7 +16,7 @@ public abstract class MenuItem {
 		return ingredientCost;
 	}
 
-	public static void setIngredientCost(double ingredientCost) {
+	public void setIngredientCost(double ingredientCost) {
 		MenuItem.ingredientCost = ingredientCost;
 	}
 
@@ -52,7 +52,7 @@ public abstract class MenuItem {
 		this.name = name;
 		this.price = price;
 		this.quality = quality;
-		this.ingredientCost = ingredientCost;
+		MenuItem.ingredientCost = ingredientCost;
 	}
 
 }

@@ -48,9 +48,10 @@ public class Client {
 				"Mackenzie", "Lila", "Evelyn", "Adalyn", "Grace", "Brooklyn",
 				"Ellie", "Anna" };
 
-		int index = (int) (Math.random() * names.length);
-		name = names[index];
-		surname = surnames[index];
+		int nindex = (int) (Math.random() * names.length);
+		name = names[nindex];
+		int sindex = (int) (Math.random() * surnames.length);
+		surname = surnames[sindex];
 
 	}
 

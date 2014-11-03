@@ -5,11 +5,9 @@
 
 public class Beverage extends MenuItem
 {
-	
 	public Integer volume;
 	
 	private Menu menu;
-	
 	
 	public Beverage(String name, double price, QualityLevel quality) {
 		super(name, price, quality,ingredientCost);

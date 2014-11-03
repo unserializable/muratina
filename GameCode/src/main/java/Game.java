@@ -7,11 +7,15 @@ import java.util.Scanner;
 
 public class Game {
 	private double score;
+	
 	private HighScoreList highScoreList;
 
 	public Player player;
+	
 	public Restaurant restaurant;
+	
 	public Integer day;
+	
 	public static String userInput;
 
 	public void start() {
@@ -52,7 +56,9 @@ public class Game {
 				if ((day == 7) || (day == 14) || (day == 21) || day == 30)
 					restaurant.availableBudget = restaurant.deductSalaries();
 					restaurant.paySuppliers(menu);
-					
+				
+				if(day == 30)
+					restaurant.payUtilityCosts();
 				//each day we have 18 different clients selected.
 				
 			}
@@ -72,16 +78,36 @@ public class Game {
 			//clients sit down on each table
 			restaurant.serveMealOrdersToClients(menu);
 			
+			//add total money spent by clients to available budget
+			restaurant.addTotalClientsMoney();
 			
+			//print out statistics
+			System.out.println("\n"
+					+ "\n=========================================="
+					+ "\n Yet Another Busy Day : Day "+ day + "is over"
+					+ "\n  ----------------SCORE------------------- "
+					+ "\n Available Budget: " + restaurant.availableBudget + "'s Menu"
+					+ "\n Reputation: " + restaurant.reputation + "'s Menu"
+					+ "\n=========================================="
+					);
+			collectInput();
+			//cleanup restaurant for the next day
+			restaurant.cleanUpRestaurant();
+			if(restaurant.availableBudget <= 0)
+				break;
 			day++;
 		} while (day <= 30);
+		
+		System.out.println("\n"
+				+ "\n  /$$$$$$   /$$$$$$  /$$      /$$ /$$$$$$$$        /$$$$$$  /$$    /$$ /$$$$$$$$ /$$$$$$$ "
+				+ "\n/$$__  $$ /$$__  $$| $$$    /$$$| $$_____/       /$$__  $$| $$   | $$| $$_____/| $$__  $$"
+				+ "\n| $$  \\__/| $$  \\ $$| $$$$  /$$$$| $$            | $$  \\ $$| $$   | $$| $$      | $$  \\ $$"
+				+ "\n| $$ /$$$$| $$$$$$$$| $$ $$/$$ $$| $$$$$         | $$  | $$|  $$ / $$/| $$$$$   | $$$$$$$/"
+				+ "\n| $$|_  $$| $$__  $$| $$  $$$| $$| $$__/         | $$  | $$ \\  $$ $$/ | $$__/   | $$__  $$"
+				+ "\n| $$  \\ $$| $$  | $$| $$\\  $ | $$| $$            | $$  | $$  \\  $$$/  | $$      | $$  \\ $$"
+				+ "\n|  $$$$$$/| $$  | $$| $$ \\/  | $$| $$$$$$$$      |  $$$$$$/   \\  $/   | $$$$$$$$| $$  | $$"
+				+ "\n\\______/ |__/  |__/|__/     |__/|________/       \\______/     \\_/    |________/|__/  |__/");
 	}
-
-
-
-	
-
-
 
 	/**
 	 * @param menu

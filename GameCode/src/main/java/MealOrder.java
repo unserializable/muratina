@@ -6,35 +6,28 @@
 
 public class MealOrder
 {
+	private Employee employee;
+	
 	public Beverage orderedBeverage;
 	
 	public Dish orderedDish;
+	
 	private Table table;
-	
-	private Employee employee;
-	
-	public Dish getDish( )
-	{
-		return null;
-	}
 	
 	public MealOrder() {
 		
 	}
+	
+	public Beverage getBeverage(){
+		return orderedBeverage;
+	}
 
-	public Beverage getBeverage( )
-	{
-		return null;
+	public Dish getDish() {
+		return orderedDish;
 	}
 	
-	public Table getTable( )
-	{
-		return null;
-	}
-	
-	public Client getClient( )
-	{
-		return null;
+	public Table getTable(){
+		return table;
 	}
 	
 	
