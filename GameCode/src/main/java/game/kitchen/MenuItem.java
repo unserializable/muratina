@@ -30,6 +30,10 @@ public abstract class MenuItem {
 		this.price = price;
 	}
 
+	public MenuItem() {
+		
+	}
+
 	public void setQuality(QualityLevel quality) {
 		this.quality = quality;
 	}

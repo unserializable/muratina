@@ -9,13 +9,17 @@ import java.util.ArrayList;
 
 public class Menu
 {
-	private ArrayList<MenuItem> menuItems;
+	public ArrayList<MenuItem> menuItems;
 	
 	private Player player;
 	
-	public ArrayList<MenuItem> addBeverage(MenuItem item){
+	public ArrayList<MenuItem> addMenuItems(MenuItem item){
 		menuItems.add(item);
 		return menuItems;
+	}
+
+	public Menu() {
+		menuItems = new ArrayList<MenuItem>();
 	}
 	
 	
