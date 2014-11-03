@@ -1,4 +1,4 @@
-package game.employees;
+
 
 /**
  * @(#) Employee.java
@@ -14,8 +14,7 @@ public class Employee {
 
 	private ExperienceLevel experienceLevel;
 
-	public Employee(String name, String surname, String phoneNo, int salary,
-			ExperienceLevel experienceLevel) {
+	public Employee( String name, String surname, String phoneNo, int salary, ExperienceLevel experienceLevel ) {
 		this.setName(name);
 		this.surname = surname;
 		this.phoneNo = phoneNo;
@@ -23,40 +22,40 @@ public class Employee {
 		this.experienceLevel = experienceLevel;
 	}
 
-	public ExperienceLevel getExperienceLevel() {
+	public ExperienceLevel getExperienceLevel( ) {
 		return experienceLevel;
 	}
 
-	public String getSurname() {
+	public String getSurname( ) {
 		return surname;
 	}
 
-	public int getSalary() {
+	public int getSalary( ) {
 		return salary;
 	}
 
-	public void setSurname(String surname) {
+	public void setSurname( String surname ) {
 		this.surname = surname;
 	}
 
-	public int increaseExperience() {
+	public int increaseExperience( ) {
 		return salary;
 		
 	}
 
-	public void setSalary(int salary) {
+	public void setSalary( int salary ) {
 		this.salary = salary;
 	}
 
-	public void setExperienceLevel(ExperienceLevel experienceLevel) {
+	public void setExperienceLevel( ExperienceLevel experienceLevel ) {
 		this.experienceLevel = experienceLevel;
 	}
 
-	public String getName() {
+	public String getName( ) {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName( String name ) {
 		this.name = name;
 	}
 

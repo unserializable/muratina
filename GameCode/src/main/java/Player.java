@@ -1,5 +1,4 @@
-package game.main;
-import game.kitchen.Menu;
+
 
 /**
  * @(#) Player.java

@@ -1,4 +1,4 @@
-package game.kitchen;
+
 /**
  * @(#) MenuItem.java
  */

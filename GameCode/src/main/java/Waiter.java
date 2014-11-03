@@ -1,21 +1,17 @@
-package game.employees;
-import java.util.ArrayList;
+
 
 /**
- * @(#) Chef.java
+ * @(#) Waiter.java
  */
-public class Chef extends Employee
+public class Waiter extends Employee
 {
 
-	public Chef(String name, String surname, String phoneNo, int salary,
-			ExperienceLevel experienceLevel) {
+	public Waiter( String name, String surname, String phoneNo, int salary, ExperienceLevel experienceLevel ) {
 		super(name, surname, phoneNo, salary, experienceLevel);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public ExperienceLevel getExperienceLevel() {
-		// TODO Auto-generated method stub
 		return super.getExperienceLevel();
 	}
 
@@ -23,16 +19,16 @@ public class Chef extends Employee
 	public int increaseExperience() {
 		switch (super.getExperienceLevel()) {
 		case Low:
-			super.setSalary(300);
+			super.setSalary(200);
 			break;
 		case Medium:
-			super.setSalary(400);
+			super.setSalary(300);
 			break;
 		case High:
-			super.setSalary(500);
+			super.setSalary(200);
 			break;
 		default:
-			super.setSalary(300);
+			super.setSalary(200);
 			break;
 		}
 		return super.increaseExperience();
@@ -40,11 +36,8 @@ public class Chef extends Employee
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return super.getName();
 	}
-
-	private String taxCode;
 	
 	
 }

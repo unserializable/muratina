@@ -1,6 +1,3 @@
-package game.mealorder;
-import game.employees.Waiter;
-import game.kitchen.MealOrder;
 
 import java.util.ArrayList;
 
@@ -42,6 +39,7 @@ public class Table {
 
 	private Boolean occupied;
 
+	ArrayList<Client> clients;
 	ArrayList<Waiter> servingWaiters;
 
 	private Waiter servingWaiter;

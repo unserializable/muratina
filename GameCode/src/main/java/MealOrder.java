@@ -1,7 +1,4 @@
-package game.kitchen;
-import game.employees.Employee;
-import game.mealorder.Client;
-import game.mealorder.Table;
+
 
 /**
  * @(#) MealOrder.java
@@ -9,9 +6,9 @@ import game.mealorder.Table;
 
 public class MealOrder
 {
-	private Beverage drinkorder;
+	public Beverage orderedBeverage;
 	
-	private Dish foodorder;
+	public Dish orderedDish;
 	private Table table;
 	
 	private Employee employee;
@@ -21,6 +18,10 @@ public class MealOrder
 		return null;
 	}
 	
+	public MealOrder() {
+		
+	}
+
 	public Beverage getBeverage( )
 	{
 		return null;

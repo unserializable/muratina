@@ -1,4 +1,4 @@
-package game.kitchen;
+
 /**
  * @(#) Beverage.java
  */

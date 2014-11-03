@@ -1,5 +1,4 @@
-package game.employees;
-import java.util.ArrayList;
+
 
 /**
  * @(#) BarMan.java

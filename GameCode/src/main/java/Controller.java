@@ -1,4 +1,4 @@
-package game.main;
+
 
 public class Controller {
 	static Game game;

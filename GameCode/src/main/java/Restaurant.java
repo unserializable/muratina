@@ -1,11 +1,4 @@
-package game.main;
 
-import game.employees.BarMan;
-import game.employees.Chef;
-import game.employees.Employee;
-import game.employees.ExperienceLevel;
-import game.employees.Waiter;
-import game.mealorder.Table;
 
 import java.util.ArrayList;
 
@@ -48,6 +41,8 @@ public class Restaurant {
 	public double availableBudget;
 
 	public Player player;
+	
+	public ArrayList<Client> clients;
 
 	public ArrayList<Table> tables;
 
@@ -56,7 +51,10 @@ public class Restaurant {
 	public ArrayList<Waiter> waitersList;
 
 	public Restaurant() {
+		//initial budget is 10000
+		//initial reputation is 15
 		availableBudget = 10000;
+		reputation = 15;
 		tables = new ArrayList<Table>();
 		setUpTables();
 		createEmployees();
@@ -73,6 +71,18 @@ public class Restaurant {
 		}
 	}
 
+	public void receiveClients(){
+		for (Table table : tables) {
+			int clientCount = 0;
+			do {
+				Client client = new Client();
+				clients.add(client);
+				table.clients = new ArrayList<Client>();
+				table.clients.add(client);
+				clientCount++;
+			} while (clientCount<2);
+		}
+	}
 	/**
 	 * @param WaitersList
 	 */

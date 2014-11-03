@@ -1,10 +1,4 @@
-package game.main;
 
-import game.kitchen.Beverage;
-import game.kitchen.Dish;
-import game.kitchen.Menu;
-import game.kitchen.MenuItem;
-import game.kitchen.QualityLevel;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -51,7 +45,60 @@ public class Game {
 				//lets see the menu
 				displayWeeklyMenu(menu);
 				
+				//pay Supplier on Day 7
+				//restaurant.availableBudget = restaurant.availableBudget- 100;
+				//each day we have 18 different clients selected.
+				
 			}
+			
+			System.out.println("\n"
+					+ "\n=========================================="
+					+ "\n Great Everything is All set. "
+					+ "\n The doors will open in a few Seconds "
+					+ "\n" + restaurant.name + "'s Menu"
+					+ "\n=========================================="
+					);
+			//initial budget is 10000
+			//initial reputation is 15
+			//day 1
+			restaurant.receiveClients();
+			
+			//clients sit down on each table
+			
+			
+			for (Table table : restaurant.tables) {
+				int count = 0;
+				do {
+					//clients order a meal
+					for (MenuItem menuitem : menu.menuItems) {
+						// a meal is a dish and a beverage
+						MealOrder mealorder = new MealOrder();
+						if (menuitem.getClass() == Beverage.class) {
+							mealorder.orderedBeverage = (Beverage) menuitem;
+						} else if (menuitem.getClass() == Dish.class) {
+							mealorder.orderedDish = (Dish) menuitem;
+						}
+						Waiter waiter = table.getServingWaiter();
+						System.out.println("\n"
+								+ "\n=========================================="
+								+ "\n" + waiter.getName() + " just received two orders"
+								+ "\n------------------------------------------------"
+								+ "\n                 Table : " + table.getTableNo()
+								+ "\n------------------------------------------------"
+								+ "\n Beverage :" + mealorder.orderedBeverage.name 
+								+ "\n Drinks   :" + mealorder.orderedDish.name
+								+ "\n------------------------------------------------"
+								+ "" + waiter.getName() + "just served the clientss on Table" + table.getTableNo()
+								+ "\n They are eating like"
+								+ "\n=========================================="
+								);
+						count++;
+					}
+				} while (count < 2);
+
+			}
+			
+			
 			day++;
 		} while (day <= 30);
 
