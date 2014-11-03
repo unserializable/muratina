@@ -4,5 +4,5 @@
 
 public enum QualityLevel
 {
-	Low, High
+	LOW, HIGH
 }

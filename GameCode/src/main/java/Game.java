@@ -4,20 +4,31 @@ import java.io.InputStreamReader;
 
 public class Game
 {
-	private double score;
+	// game always starts on day 0
+	public int day = 0;
+
+	private final Restaurant restaurant;
 	
-	private HighScoreList highScoreList;
-	
-	public Player player;
-		
-	public Integer day;
-	
-	public void start( )
-	{
-		
+	private final Player player;
+
+	public Game(Player player, Restaurant restaurant) {
+		this.player = player;
+		this.restaurant = restaurant;
 	}
 
-	public Game(Player player) {
-		this.player = player;
+	public int getDay() {
+		return day;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public int getScore() {
+		return restaurant.getCurrentBudget();
 	}
 }

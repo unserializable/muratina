@@ -19,9 +19,13 @@ Fall 2014
  /\_|__|_._o|_   _|_ _  _ // \._  _ .__._|_o _ ._  _ 
 /--\|_ |_| ||_)|_||_(/__>/ \_/|_)(/_|(_| |_|(_)| |_> 
                               |                      
-Added Classes:
+Removed classes:
+	TrainingCourse (functionality replaced with getTrainingCost() operation in Employee)
+							  
+Added classes:
   class SimulationGenerator:
     operations:
+	  // operations for randomized simulation
 	  Client +rndClient()
 	  Set<Client> +rndPopulation(Integer populationSize)
 	  Employee +rndEmployee(EmployeeType employeeType)
@@ -32,16 +36,18 @@ Added Classes:
 	  String +rndForeName()
 	  String +rndSurname()
 	  String +rndTaxCode()
+	  
+	  // operations for simulation according to existing game state
 
   class GameController:
     operations:
 	  +saveHighScoreList(HighScoreList highScoreList)
 	  HighScoreList +loadHighScoreList()
 
-Added Operations:
-  Integer +getTrainingCost to Employee
+Added operations:
+  Integer +getTrainingCost() to Employee
 
-Added Attributes:
+Added attributes:
   to Game
     + day : Integer
  _            __                     
@@ -169,11 +175,13 @@ END OF Employee
 							 
 (game starts from Controller.main)
 
-# Assign Tables
+# Assign Tables(Game)
   TODO
 
 # Create Menu
-  TODO
+  create Set<Dish> with 5 unspecified dishes AS (dishes)
+  create Set<Beverage> with 5 unspecified dishes AS (beverages)
+  
 
 # De-serialize High Score List
   de-serialize HighScoreList from saved file 'muratino-hs.ser'
@@ -185,7 +193,7 @@ END OF Employee
 	display game score
 	display newline
 
-# Game Day Simulation
+# Game Day Simulation(Game)
   set (#Semi-Random Table Combination(restaurant)) AS (occupiedTables)
   set (#Semi-Random Client Combination(restaurant)) AS (visitingClients)
   TODO
@@ -198,10 +206,11 @@ END OF Employee
 # Exit Game
   terminate game process
 
-# Expect User Input (pattern)
+# Expect User Input (instructions, pattern)
+  display instructions
   wait for user input AS (input)
   if (input) does not match (pattern)
-    display (input) and " is not among valid values. Command again, master: "
+    display (input) and " is not valid command, come again, chief: "
    return (#Expect User Input (pattern))
   else 
    return (input)
@@ -252,13 +261,15 @@ END OF Employee
   else if ()
 
 # Start Game
+  display Ascii Art Game Logo
+  display newline
   display "It is a beautiful autumn in a cold northern country of Estonia."
   display newline
   display "Almost all pale yellow leaves are fallen from birches and maples."
   display newline
   display "In the creeping winter students roam in their coats and hats."
   display newline
-  display "In this setting, you have decided to open up a new restaurant."
+  display "And you have decided to open up a new cozy restaurant."
   display newline
   display "What is your name, brave entrepreneur?"
   (#Expect User Input("[a-zA-z]+\n")) AS (playerName)
@@ -279,6 +290,7 @@ END OF Employee
 # Train Staff
 
 # View Game Statistics
+  Staff Names
 
 # Show High Score List
   (#De-serialize High Score List) AS (highScoreList)

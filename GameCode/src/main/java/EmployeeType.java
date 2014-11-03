@@ -4,5 +4,5 @@
 
 public enum EmployeeType
 {
-	BarMan, Waiter, Chef
+	BARMAN, CHEF, WAITER
 }

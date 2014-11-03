@@ -8,8 +8,6 @@ public class Employee extends Person
 	
 	private MealOrder mealOrder;
 	
-	private TrainingCourse trainingCourse;
-	
 	private Table table;
 	
 	private EmployeeType employeeType;
@@ -39,7 +37,7 @@ public class Employee extends Person
 	{
 		if (!Arrays.asList(EmployeeType.values()).contains(employeeType))
 			throw new IllegalStateException(UNDETERMINED_MSG);
-		if (EmployeeType.Waiter.equals(employeeType))
+		if (EmployeeType.WAITER.equals(employeeType))
 			return 800;
 		else
 			return 1200;
@@ -67,7 +65,7 @@ public class Employee extends Person
 		if (null == experience)
 			throw new IllegalStateException("Employee experience level not set, no salary known.");
 
-		int baseSalary = EmployeeType.Waiter.equals(employeeType) ? 200 : 300;
+		int baseSalary = EmployeeType.WAITER.equals(employeeType) ? 200 : 300;
 		if (ExperienceLevel.High.equals(experience)) {
 			return baseSalary + 200;
 		}  else if (ExperienceLevel.Medium.equals(experience)) {
@@ -75,5 +73,34 @@ public class Employee extends Person
 		}
 
 		return baseSalary;
-	} 
+	}
+
+	public String titleString() {
+		return employeeType.name().substring(0,1) + employeeType.name().substring(1).toLowerCase();
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb
+				.append(titleString()).append(" ")
+				.append(name).append(" ")
+				.append(surname).append(" ")
+				.append("(").append(phoneNo).append(")");
+
+		if (ExperienceLevel.High.equals(experience)) {
+			sb.append(" is highly experienced, ");
+		} else {
+			sb.append(" is with ").append(experience.name().toUpperCase()).append( " experience, ");
+		}
+
+		sb.append("current SALARY is ").append(getSalary());
+
+		if (taxCode != null) {
+			sb.append(" and tax-code is ").append(taxCode);
+		}
+		sb.append(".");
+
+		return sb.toString();
+	}
 }

@@ -19,6 +19,17 @@ public class SimulationGenerator {
 			"+372", "+61", "+254", "+39", "+358", "+92", "+856", "+84", "+255"
 	};
 
+	private static final String[] TEST_DISHES = {
+			"Verivorst", "Mulgipuder", "Lasagne", "Foie Gras", "Buckwheat Porridge", "Bean Stew w/ Minced Meat",
+			"Spaghetti alla Carbonara", "Ahjukartul", "Chilli Con Carne", "Vegetariana a la Carnivore"
+	};
+
+	private static final String[] TEST_BEVERAGES = {
+			"Muratina", "Coca-Cola", "Red Bull", "Gin & Tonic", "Metsakohin", "Buckwheat Porridge", "Sex on the Beach",
+			"Cider", "Fizz", "Strongbow", "Virmalised", "Puhja Konn"
+	};
+
+
 	public static Client rndClient() {
 		Client result = new Client();
 		result.setName(rndForeName());
@@ -42,7 +53,8 @@ public class SimulationGenerator {
 		result.setSurname(rndSurname());
 		result.setExperience(ExperienceLevel.Low);
 		result.setEmployeeType(employeeType);
-		if (EmployeeType.Chef.equals(employeeType))
+		result.setPhoneNo(rndPhoneNumber());
+		if (EmployeeType.CHEF.equals(employeeType))
 			result.setTaxCode(rndTaxCode());
 
 		return result;
@@ -102,7 +114,24 @@ public class SimulationGenerator {
 		return result;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(rndClient());
+	// returns a list of dishes with different names, but same calorie counts, quality (LOW),
+	public static Set<Dish> getTestDishes() {
+		Set<Dish> dishes = new LinkedHashSet<>(5);
+		for (Integer i: rndCombination(5, TEST_DISHES.length)) {
+			Dish dish = new Dish();
+			dish.setCalorieCount(1213).setName(TEST_DISHES[i-1]).setQuality(QualityLevel.LOW).setPrice(10);
+			dishes.add(dish);
+		}
+		return dishes;
+	}
+
+	public static Set<Beverage> getTestBeverages() {
+		Set<Beverage> beverages = new LinkedHashSet<>(5);
+		for (Integer i: rndCombination(5, TEST_BEVERAGES.length)) {
+			Beverage dish = new Beverage();
+			dish.setVolume(100).setName(TEST_BEVERAGES[i-1]).setQuality(QualityLevel.LOW).setPrice(4);
+			beverages.add(dish);
+		}
+		return beverages;
 	}
 }

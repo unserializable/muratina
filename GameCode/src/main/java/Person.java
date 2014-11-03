@@ -53,16 +53,4 @@ public abstract class Person
 	public void setTaxCode(String taxCode) {
 		this.taxCode = taxCode;
 	}
-
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("Person{");
-		sb.append("name='").append(name).append('\'');
-		sb.append(", surname='").append(surname).append('\'');
-		sb.append(", phoneNo='").append(phoneNo).append('\'');
-		sb.append(", earnings=").append(earnings);
-		sb.append(", taxCode='").append(taxCode).append('\'');
-		sb.append('}');
-		return sb.toString();
-	}
 }
