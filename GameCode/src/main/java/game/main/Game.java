@@ -9,6 +9,7 @@ import game.kitchen.QualityLevel;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Game {
 	private double score;
@@ -31,15 +32,23 @@ public class Game {
 			restaurant.assignTablesToServingWaiters();
 
 			// lets set the menu
-			System.out.println("Lets create " + restaurant.name + "'s Menu");
+			System.out.println("\n"
+					+ "\n=========================================="
+					+ "\nLets create " + restaurant.name + "'s Menu"
+					+ "\n=========================================="
+					);
 			Menu menu = new Menu();
 
 			if ((day == 1) || (day == 7) || (day == 14) || (day == 21)) {
 				// if day 1, 7, 14, 21set menu items
+				
 				// lets add dishes
-				createDish(menu);
+				createDishes(menu);
 				// lets add beverages
-				createBeverage(menu);
+				createBeverages(menu);
+				// lets set up the cost of the dishes
+				setUpMenuItemsCost(menu);
+				//lets see the menu
 				displayWeeklyMenu(menu);
 				
 			}
@@ -58,6 +67,71 @@ public class Game {
 		// populate
 	}
 
+
+
+	/**
+	 * @param menu
+	 * Collect cost of High quality Dishes
+	 * Collect cost of High quality Drinks
+	 * Collect cost of low quality Dishes
+	 * Collect cost of High quality Dishes
+	 */
+	public void setUpMenuItemsCost(Menu menu) {
+		double highQualitydishesCost;
+		double lowQualitydishesCost;
+		double highQualitybeverageCost;
+		double lowQualitybeverageCost;
+		System.out.println("\n-----------------------------"
+				+ "\n=========================================="
+				+ "\nOk, now Lets Setup the Menu Item Costs. "
+				+ "\n=========================================="
+				+ "\nHow much for the High Quality Dishes?"
+				);
+		//set up costs
+		highQualitydishesCost = collectDoubleInput();
+		System.out.println("\n-----------------------------"
+				+ "\n"
+				+ "\nHow much for the Low Quality Dishes?");
+		lowQualitydishesCost = collectDoubleInput();
+		System.out.println("\n-----------------------------"
+				+ "\n"
+				+ "\nHow much for the High Quality Beverages?");
+		highQualitybeverageCost = collectDoubleInput();
+		
+		System.out.println("\n-----------------------------"
+				+ "\n"
+				+ "\nHow much for the Low Quality Beverages?");
+		lowQualitybeverageCost = collectDoubleInput();
+
+		for (MenuItem menuitem : menu.menuItems) {
+			if(menuitem.getClass()== Beverage.class){
+				switch (menuitem.quality) {
+				case High:
+					menuitem.setPrice(highQualitybeverageCost);
+					break;
+				case Low:
+					menuitem.setPrice(lowQualitybeverageCost);
+					break;
+				default:
+					menuitem.setPrice(lowQualitybeverageCost);
+					break;
+				}
+			}else if(menuitem.getClass()== Dish.class){
+				switch (menuitem.quality) {
+				case High:
+					menuitem.setPrice(highQualitydishesCost);
+					break;
+				case Low:
+					menuitem.setPrice(lowQualitydishesCost);
+					break;
+				default:
+					menuitem.setPrice(lowQualitydishesCost);
+					break;
+				}
+			}
+		}
+	}
+
 	
 
 	/**
@@ -69,7 +143,7 @@ public class Game {
 				+ "\n++++++++++++++++++++++++");
 		for (MenuItem menuitem : menu.menuItems) {
 			int position = menu.menuItems.indexOf(menuitem) + 1;
-			System.out.println("\n#+" + position + "." + menuitem.getName()+ "------ > Price: € "+menuitem.getPrice()+"");
+			System.out.println("\n#+" + position + "." + menuitem.getName()+ "----> Price: € "+menuitem.getPrice()+"----> Quality: "+ menuitem.getQuality());
 		}
 	}
 
@@ -77,10 +151,10 @@ public class Game {
 	 * @param menu
 	 *            Create the dishes add them to the menu
 	 */
-	public void createDish(Menu menu) {
+	public void createDishes(Menu menu) {
 		do {
 			int position = menu.menuItems.size()+1;
-			Dish dish = new Dish("Empty", 0, QualityLevel.Low, 100, 100);
+			Dish dish = new Dish("Empty", 0, QualityLevel.Low, 0, 0);
 			System.out.println("Enter the name of your Dish "+ position +",Player: "+ player.name
 					+ "?");
 			dish.name = collectInput();
@@ -92,9 +166,6 @@ public class Game {
 					+ ":" + "\n1.High" + "\n2.Low");
 			String quality = collectInput();
 			dish.calculateIngredientCost(quality);
-			System.out.println("How much is the "+ dish.name + " " + player.name + "?");
-			String price = collectInput();
-			dish.price = Double.parseDouble(price);
 			menu.addMenuItems(dish);
 			System.out.println("++Great! Dish "+dish.name+" has Successfully been created\n");
 		} while (menu.menuItems.size() <= 4);
@@ -105,7 +176,7 @@ public class Game {
 	 * @param menu
 	 *            create the beverages add them to the menu
 	 */
-	public void createBeverage(Menu menu) {
+	public void createBeverages(Menu menu) {
 		do {
 			int position = menu.menuItems.size()+1;
 			Beverage beverage = new Beverage("Empty", 0, QualityLevel.Low, 100,
@@ -120,11 +191,8 @@ public class Game {
 					+ ":" + "\n1.High" + "\n2.Low");
 			String quality = collectInput();
 			beverage.calculateIngredientCost(quality);
-			System.out.println("How much is the " +beverage.name+" "+ player.name + "?");
-			String price = collectInput();
-			beverage.price = Double.parseDouble(price);
 			menu.addMenuItems(beverage);
-			System.out.println("++Great! Dish "+beverage.name+" has Successfully been created");
+			System.out.println("++Great! beverage "+beverage.name+" has Successfully been created");
 		} while (menu.menuItems.size() <= 9);
 		System.out.println("\nAdding of Beverages Complete!");
 	}
@@ -176,4 +244,21 @@ public class Game {
 
 		return userInput;
 	}
+	
+	public Double collectDoubleInput() {
+		InputStreamReader input = new InputStreamReader(System.in);
+		BufferedReader reader = new BufferedReader(input);
+		double value = 0;
+		try {
+			do {
+				userInput = reader.readLine();
+				value = Double.parseDouble(userInput);
+			} while (userInput.isEmpty() || value < 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return value;
+	}
+	
 }
