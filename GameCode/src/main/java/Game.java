@@ -98,6 +98,13 @@ public class Game {
 			day++;
 		} while (day <= 30);
 		
+		gameOver();
+	}
+
+	/**
+	 * 
+	 */
+	public void gameOver() {
 		System.out.println("\n"
 				+ "\n  /$$$$$$   /$$$$$$  /$$      /$$ /$$$$$$$$        /$$$$$$  /$$    /$$ /$$$$$$$$ /$$$$$$$ "
 				+ "\n/$$__  $$ /$$__  $$| $$$    /$$$| $$_____/       /$$__  $$| $$   | $$| $$_____/| $$__  $$"
@@ -276,6 +283,7 @@ public class Game {
 		try {
 			do {
 				userInput = reader.readLine();
+				
 			} while (userInput.isEmpty());
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -113,6 +113,7 @@ public class Restaurant {
 
 	public void cleanUpRestaurant() {
 		tables = new ArrayList<Table>();
+		clients  = new ArrayList<Client>();
 		
 	}
 
@@ -238,7 +239,7 @@ public class Restaurant {
 						selecteditems.append("\nClient:" + client.getName());
 						//select random beverage
 						do {
-							int index = (int) (Math.random() * menu.menuItems.size());
+							int index = getRandomIndex(menu);
 							MenuItem selectedMenuItem = menu.menuItems.get(index);
 							if (selectedMenuItem.getClass() == Beverage.class) {
 								mealOrder.orderedBeverage = (Beverage) selectedMenuItem;
@@ -252,7 +253,7 @@ public class Restaurant {
 						selecteditems.append("\nBeverage: "+ mealOrder.getBeverage().name);
 						//select random dish
 						do {
-							int index = (int) (Math.random() * menu.menuItems.size());
+							int index = getRandomIndex(menu);
 							MenuItem selectedMenuItem = menu.menuItems.get(index);
 							if (selectedMenuItem.getClass() == Dish.class) {
 								mealOrder.orderedDish = (Dish) selectedMenuItem;
@@ -293,6 +294,15 @@ public class Restaurant {
 				} while (count < 2);
 
 		}
+	}
+
+	/**
+	 * @param menu
+	 * @return
+	 */
+	public int getRandomIndex(Menu menu) {
+		int index = (int) (Math.random() * menu.menuItems.size());
+		return index;
 	}
 	public void setEmployees(ArrayList<Employee> employees) {
 		this.employees = employees;
@@ -361,23 +371,51 @@ public class Restaurant {
 			System.out.println("-----------------------------------"
 					+ "\nWelcome to WORKFASTER Cooking School,"
 					+ "\nHere are the Costs:"
-					+ "\n 1. To Train Waiter = 800£"
-					+ "\n 2. To Train Barman = 1200£"
-					+ "\n 3. To Train Chef   = 1200£"
-					+ "Select Employees To Trains"
+					+ "\n 1. To Train Waiters = 800€"
+					+ "\n 2. To Train Barman = 1200€"
+					+ "\n 3. To Train Chef   = 1200€"
+					+ "\n 4. Return To Restaurant"
+					+ "\nSelect Employees To Trains"
 					+ city + "");
 			do {
 				game.collectInput();
 				switch (userInput) {
 				case "1":
-					game.start();
+					System.out.println("===================================="
+							+ "\n ++ Please Select who to Train ++");
+					for (Waiter waiter : waitersList) {
+						int position = employees.indexOf(waiter) + 1;
+							System.out.println("\n " + position + " Waiter :"
+									+ waiter.getName());
+						System.out.println("\n 4. ALL");
+					}
 				case "2":
-
-				case "42":
+					BarMan barman = new BarMan();
+					for (Employee employee : employees) {
+						if (employee.getClass() == BarMan.class) {
+							barman = (BarMan) employee;
+						}
+					}
+					barman.train(game);
+				case "3":
 
 				default:
+					break;
 				}
 			} while (true);
+		case "2":
+
+		case "3":
+
+		default:
+			break;
 		}
+	}
+
+	/**
+	 * @param barman
+	 */
+	public void deductFromAvailableBudget(double value) {
+		availableBudget = availableBudget - value;
 	}
 	}

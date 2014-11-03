@@ -37,10 +37,13 @@ public class Controller {
 					        viewStartMenu();
 					  case "42":
 						     System.out.println("Bye Bye");
+						     game.gameOver();
 					         System.exit(0);// they are executed if variable ==  any of the above c's
 					  default:
 				}
 		}
 		while (true);
 	}
+	
+	
 }

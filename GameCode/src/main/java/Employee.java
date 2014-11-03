@@ -24,6 +24,10 @@ public class Employee {
 		this.experienceLevel = experienceLevel;
 	}
 
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getSatisfactionRate() {
 		return satisfactionRate;
 	}
