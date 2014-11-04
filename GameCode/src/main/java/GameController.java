@@ -280,8 +280,8 @@ public class GameController {
 			boolean fSatisfied = RANDOM.nextDouble() > (100 - probFoodSatisfaction)/100.0;
 			boolean dSatisfied = RANDOM.nextDouble() > (100 - probDrinkSatisfaction)/100.0;
 			String sers = sSatisfied ? "was satisfied with service" : "was unsatisfied with service";
-			String foos = sSatisfied ? "satisfied with food" : "unsatisfied with food";
-			String dris = sSatisfied ? "satisfied with drink" : "unsatisfied with drink";
+			String foos = fSatisfied ? "satisfied with food" : "unsatisfied with food";
+			String dris = dSatisfied ? "satisfied with drink" : "unsatisfied with drink";
 
 			System.out.println(c + " was serviced by " +
 					employeeToShortString(daysClientWaiters.get(c))
@@ -530,7 +530,7 @@ public class GameController {
 	// returns employees that are possible to train in current game state (experience not high yet, budget sufficient)
 	private static Set<Employee> getTrainableStaff(Game game) {
 		return game.getRestaurant().getStaff().stream().filter( // any employees to train?
-				e -> (!e.getExperience().equals(ExperienceLevel.High))
+				e -> (!e.getExperience().equals(ExperienceLevel.HIGH))
 						&& e.getTrainingCost() <= game.getRestaurant().getCurrentBudget())
 				.collect(Collectors.toSet());
 	}

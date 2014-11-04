@@ -57,13 +57,13 @@ public class Employee extends Person
 	
 	public boolean increaseExperience()
 	{
-		if (ExperienceLevel.High.equals(experience)) {
+		if (ExperienceLevel.HIGH.equals(experience)) {
 			throw new IllegalStateException("Attempt to increase experience for Employee with maximum experience level");
 
-		} else if (ExperienceLevel.Medium.equals(experience)) {
-			this.experience = ExperienceLevel.High;
-		} else if (ExperienceLevel.Low.equals(experience)) {
-			this.experience = ExperienceLevel.Medium;
+		} else if (ExperienceLevel.MEDIUM.equals(experience)) {
+			this.experience = ExperienceLevel.HIGH;
+		} else if (ExperienceLevel.LOW.equals(experience)) {
+			this.experience = ExperienceLevel.MEDIUM;
 		} else
 			throw new IllegalStateException("Unable to increase Employee experience (not set or non-handled ExperienceLevel)");
 
@@ -74,20 +74,20 @@ public class Employee extends Person
 	public int baseLineClientSatisfactionPercentage() {
 		if (isWaiter()) {
 			switch (experience) {
-				case High:
+				case HIGH:
 							return 90;
-				case Medium:
+				case MEDIUM:
 							return 80;
-				case Low :
+				case LOW:
 							return 60;
 			}
 		}
 		switch (experience) {
-			case High:
+			case HIGH:
 				return 80;
-			case Medium:
+			case MEDIUM:
 				return 60;
-			case Low :
+			case LOW:
 				return 40;
 		}
 
@@ -102,9 +102,9 @@ public class Employee extends Person
 			throw new IllegalStateException("Employee experience level not set, no salary known.");
 
 		int baseSalary = EmployeeType.WAITER.equals(employeeType) ? 200 : 300;
-		if (ExperienceLevel.High.equals(experience)) {
+		if (ExperienceLevel.HIGH.equals(experience)) {
 			return baseSalary + 200;
-		}  else if (ExperienceLevel.Medium.equals(experience)) {
+		}  else if (ExperienceLevel.MEDIUM.equals(experience)) {
 			return baseSalary + 100;
 		}
 
@@ -116,7 +116,7 @@ public class Employee extends Person
 	}
 
 	public String experienceString() {
-		if (ExperienceLevel.High.equals(experience)) {
+		if (ExperienceLevel.HIGH.equals(experience)) {
 			return "is highly experienced";
 		} else {
 			return "is with " + experience.name().toUpperCase() +  " experience";

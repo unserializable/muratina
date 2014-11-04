@@ -4,5 +4,5 @@
 
 public enum ExperienceLevel
 {
-	Low, Medium, High
+	LOW, MEDIUM, HIGH
 }

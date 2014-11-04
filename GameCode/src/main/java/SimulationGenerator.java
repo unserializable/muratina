@@ -51,7 +51,7 @@ public class SimulationGenerator {
 		Employee result = new Employee();
 		result.setName(rndForeName());
 		result.setSurname(rndSurname());
-		result.setExperience(ExperienceLevel.Low);
+		result.setExperience(ExperienceLevel.LOW);
 		result.setEmployeeType(employeeType);
 		result.setPhoneNo(rndPhoneNumber());
 		if (EmployeeType.CHEF.equals(employeeType))
