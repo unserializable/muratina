@@ -509,7 +509,7 @@ public class GameController {
 	private static MenuItem askMenuItemInfo(MenuItem menuItem, int order) {
 		String itemType = menuItem.getClass().getSimpleName().toLowerCase();
 
-		String itemName = getUserInput("What is the name for the " + ORDER_NOS.get(order) + " " +  itemType + "?");
+		String itemName = getUserInput("What is the name for the " + ORDER_NOS.get(order+1) + " " +  itemType + "?");
 		String qString = getUserInput("What is the quality level for the '" + itemName + "'?\n" + MENU_ITEM_QUALITY_LEVEL_MENU);
 		QualityLevel itemQuality = ("1".equals(qString)) ? QualityLevel.LOW : QualityLevel.HIGH;
 
