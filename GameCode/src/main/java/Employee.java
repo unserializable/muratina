@@ -1,21 +1,17 @@
 import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Employee extends Person
 {
 	private static final String UNDETERMINED_MSG = "Cannot determine cost for employee training.";
+	public static final int MAX_WAITER_TABLES = 3;
 
 	private ExperienceLevel experience;
-	
-	private MealOrder mealOrder;
-	
-	private Table table;
+
+	private Set<Table> servicedTables = new LinkedHashSet<>();
 	
 	private EmployeeType employeeType;
-	
-	public void setServicedTables( Table tables )
-	{
-		// THIS IS BOGUS, tables should ^ be array ^ 
-	}
 
 	public EmployeeType getEmployeeType() {
 		return employeeType;
@@ -31,6 +27,22 @@ public class Employee extends Person
 
 	public void setExperience(ExperienceLevel experience) {
 		this.experience = experience;
+	}
+
+	public Set<Table> getServicedTables() {
+		return servicedTables;
+	}
+
+	public boolean isWaiter() {
+		return EmployeeType.WAITER.equals(employeeType);
+	}
+
+	public boolean isBarman() {
+		return EmployeeType.BARMAN.equals(employeeType);
+	}
+
+	public boolean isChef() {
+		return EmployeeType.CHEF.equals(employeeType);
 	}
 
 	public int getTrainingCost()
@@ -58,6 +70,30 @@ public class Employee extends Person
 		return true;
 	}
 
+	// base satisfaction percentage with this employees' services
+	public int baseLineClientSatisfactionPercentage() {
+		if (isWaiter()) {
+			switch (experience) {
+				case High:
+							return 90;
+				case Medium:
+							return 80;
+				case Low :
+							return 60;
+			}
+		}
+		switch (experience) {
+			case High:
+				return 80;
+			case Medium:
+				return 60;
+			case Low :
+				return 40;
+		}
+
+		throw new IllegalStateException("Should have returned by now");
+	}
+
 	public Integer getSalary() {
 		if (null == employeeType)
 			throw new IllegalStateException("Employee type not set, no salary known.");
@@ -79,6 +115,14 @@ public class Employee extends Person
 		return employeeType.name().substring(0,1) + employeeType.name().substring(1).toLowerCase();
 	}
 
+	public String experienceString() {
+		if (ExperienceLevel.High.equals(experience)) {
+			return "is highly experienced";
+		} else {
+			return "is with " + experience.name().toUpperCase() +  " experience";
+		}
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
@@ -86,13 +130,8 @@ public class Employee extends Person
 				.append(titleString()).append(" ")
 				.append(name).append(" ")
 				.append(surname).append(" ")
-				.append("(").append(phoneNo).append(")");
-
-		if (ExperienceLevel.High.equals(experience)) {
-			sb.append(" is highly experienced, ");
-		} else {
-			sb.append(" is with ").append(experience.name().toUpperCase()).append( " experience, ");
-		}
+				.append("(").append(phoneNo).append(")")
+				.append(" ").append(experienceString()).append(", ");
 
 		sb.append("current SALARY is ").append(getSalary());
 

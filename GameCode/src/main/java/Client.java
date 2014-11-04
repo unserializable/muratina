@@ -33,6 +33,10 @@ public class Client extends Person
 	private double totalMoneySpent;
 	
 	private String taxCode;
-	
-	
+
+
+	@Override
+	public String toString() {
+		return getName() + " " + getSurname();
+	}
 }

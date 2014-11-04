@@ -5,36 +5,18 @@
 public class MealOrder
 {
 	private Beverage drinkorder;
-	
 	private Dish foodorder;
-	
-	private ClientStatistics clientStatisics;
-	
-	private MealSatisfaction mealSatisfaction;
-	
-	private Table table;
-	
-	private Employee employee;
-	
-	public Dish getDish( )
-	{
-		return null;
+
+	public MealOrder(Beverage beverage, Dish dish) {
+		this.drinkorder = beverage;
+		this.foodorder = dish;
 	}
-	
-	public Beverage getBeverage( )
-	{
-		return null;
+
+	public Dish getFoodorder() {
+		return foodorder;
 	}
-	
-	public Table getTable( )
-	{
-		return null;
+
+	public Beverage getDrinkorder() {
+		return drinkorder;
 	}
-	
-	public Client getClient( )
-	{
-		return null;
-	}
-	
-	
 }

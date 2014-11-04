@@ -25,6 +25,10 @@ public abstract class MenuItem
 		return this;
 	}
 
+	public boolean isHighQuality() {
+		return QualityLevel.HIGH.equals(quality);
+	}
+
 	public QualityLevel getQuality() {
 		return quality;
 	}

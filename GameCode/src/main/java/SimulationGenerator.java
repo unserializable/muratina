@@ -114,22 +114,23 @@ public class SimulationGenerator {
 		return result;
 	}
 
-	// returns a list of dishes with different names, but same calorie counts, quality (LOW),
-	public static Set<Dish> getTestDishes() {
+	// returns a list of dishes with different names, but same calorie counts, quality (HIGH),
+	public static Set<Dish> rndTestDishes() {
 		Set<Dish> dishes = new LinkedHashSet<>(5);
 		for (Integer i: rndCombination(5, TEST_DISHES.length)) {
 			Dish dish = new Dish();
-			dish.setCalorieCount(1213).setName(TEST_DISHES[i-1]).setQuality(QualityLevel.LOW).setPrice(10);
+			dish.setCalorieCount(1213).setName(TEST_DISHES[i-1]).setQuality(QualityLevel.HIGH).setPrice(15);
 			dishes.add(dish);
 		}
 		return dishes;
 	}
 
-	public static Set<Beverage> getTestBeverages() {
+	// returns a list of beverages with different names, but same volumes and quality (HIGH),
+	public static Set<Beverage> rndTestBeverages() {
 		Set<Beverage> beverages = new LinkedHashSet<>(5);
 		for (Integer i: rndCombination(5, TEST_BEVERAGES.length)) {
 			Beverage dish = new Beverage();
-			dish.setVolume(100).setName(TEST_BEVERAGES[i-1]).setQuality(QualityLevel.LOW).setPrice(4);
+			dish.setVolume(100).setName(TEST_BEVERAGES[i-1]).setQuality(QualityLevel.HIGH).setPrice(3);
 			beverages.add(dish);
 		}
 		return beverages;

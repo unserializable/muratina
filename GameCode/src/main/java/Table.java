@@ -9,8 +9,12 @@ public class Table
 	private MealOrder mealOrder;
 	
 	private Boolean occupied;
-	
-	private Restaurant Restaurant;
-	
-	
+
+	public Table(Integer tableNo) {
+		this.tableNo = tableNo;
+	}
+
+	public Integer getTableNo() {
+		return tableNo;
+	}
 }
