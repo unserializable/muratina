@@ -1,13 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @(#) Client.java
  */
 
 public class Client extends Person
 {
-	public ClientStatistics getClientStatistics() {
-		return clientStatistics;
-	}
-
 	public Integer getAvgDishCalorieCount() {
 		return avgDishCalorieCount;
 	}
@@ -24,8 +23,6 @@ public class Client extends Person
 		return taxCode;
 	}
 
-	private ClientStatistics clientStatistics;
-	
 	private Integer avgDishCalorieCount;
 	
 	private Integer avgBeverageVolume;
@@ -34,9 +31,15 @@ public class Client extends Person
 	
 	private String taxCode;
 
+	private List<MealOrder> mealOrders = new ArrayList<>();
+
 
 	@Override
 	public String toString() {
 		return getName() + " " + getSurname();
+	}
+
+	public void addMealOrder(MealOrder order) {
+		mealOrders.add(order);
 	}
 }

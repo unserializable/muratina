@@ -84,9 +84,7 @@ public class GameController {
 		System.out.println(AA_GAME_NAME);
 	}
 
-
-	// TODO: remove
-	private static Menu quickTestMenu() {
+	private static Menu createTestMenu() {
 		Menu testMenu = new Menu();
 		for (Dish d: SimulationGenerator.rndTestDishes()) {
 			testMenu.addMenuItem(d);
@@ -133,7 +131,14 @@ public class GameController {
 		Game game = new Game(player, restaurant);
 
 		Set<Employee> staff = createStaff();
-		Menu menu = quickTestMenu();  // askRestaurantMenu(game);
+
+		Menu menu = null;
+		Integer command=Integer.valueOf(getUserInput("Do you want to:\n1. Create Menu yourself\n2. Let Chef put the menu together\n"));
+		if (command == 1) {
+			menu = askRestaurantMenu(game);
+		} else {
+			menu = createTestMenu();
+		}
 
 		restaurant.setStaff(staff);
 		restaurant.setMenu(menu);
@@ -206,6 +211,7 @@ public class GameController {
 			Dish d = restaurant.getMenu().getDishes().get(RANDOM.nextInt(Menu.MAX_DISHES));
 			MealOrder order = new MealOrder(b, d);
 			daysClientOrders.put(c, order);
+			c.addMealOrder(order);
 		}
 
 		Set<Table> occupiedTables = new HashSet<>();
@@ -444,6 +450,7 @@ public class GameController {
 	private static void showHighScoreList() {
 		System.out.println(HIGHSCORE_LIST_HEADER);
 		// TODO: show high scores
+		System.out.println("Not implemented");
 		getUserInput(PRESS_ENTER_TO_CONTINUE, "");
 	}
 
