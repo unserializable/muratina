@@ -159,11 +159,17 @@ public class GameController {
 				game.getRestaurant().payMonthlyCosts();
 				gameEnded = true;
 
+				System.out.println("Monthly rental costs were paid and budget became " + game.getScore());
+				if (game.getScore() < 0) {
+					showBankruptcy();
+					break;
+				}
+
 				System.out.println("Game has ended successfully, score was " + game.getScore());
 				break;
 			}
 
-			if (game.getDay() % 7 == 0) {
+			if (0 != game.getDay() && game.getDay() % 7 == 0) {
 				game.getRestaurant().payDebtToSuppliers();
 				game.getRestaurant().paySalaries();
 
