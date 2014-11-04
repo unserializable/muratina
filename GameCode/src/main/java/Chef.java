@@ -13,6 +13,15 @@ public class Chef extends Employee
 		// TODO Auto-generated constructor stub
 	}
 
+	public Chef() {
+		setTrainingCost(1200);
+	}
+
+	@Override
+	public double getTrainingCost() {
+		return 1200;
+	}
+	
 	@Override
 	public ExperienceLevel getExperienceLevel() {
 		// TODO Auto-generated method stub

@@ -17,7 +17,7 @@ public class HighScoreList
 	
 	public String latestScoresList;
 	
-	public String getScoreList() {
+	public void getScoreList() {
 		try {
 			File file = new File("./../highscorelist.txt");
 			if(file.exists()== false) {
@@ -37,11 +37,9 @@ public class HighScoreList
 			e.printStackTrace();
 		}
 		
-		return null;
-		
 	}
 	
-	public String saveToScoreList(String playerScore){
+	public void saveToScoreList(String playerScore){
 		try {
 			File file = new File("./../highscorelist.txt");
 			if(file.exists()== false) {
@@ -53,7 +51,6 @@ public class HighScoreList
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 	public void viewScoresList() {

@@ -48,9 +48,9 @@ public class Client {
 				"Mackenzie", "Lila", "Evelyn", "Adalyn", "Grace", "Brooklyn",
 				"Ellie", "Anna" };
 
-		int nindex = (int) (Math.random() * names.length);
+		int nindex = getRandomIndex(names.length);
 		name = names[nindex];
-		int sindex = (int) (Math.random() * surnames.length);
+		int sindex = getRandomIndex(surnames.length);
 		surname = surnames[sindex];
 
 	}
@@ -115,13 +115,19 @@ public class Client {
 	 * Randomize client satisfaction
 	 */
 	public double getClientSatisfactionEvaluation(double percentageAverage) {
-		double num = (Math.random() * 100);
+		double num = getRandomIndex(100);
 		double satistfaction = 0;
 		if(num < percentageAverage)
-			satistfaction = 1;
+			satistfaction = -1;
 		else if (num > percentageAverage)
-			satistfaction =  -1;
+			satistfaction =  1;
 		return satistfaction;
+	}
+	
+	public int getRandomIndex(int size) {
+		Random r =  new Random();
+		int index = r.nextInt(size); 
+		return index;
 	}
 
 }

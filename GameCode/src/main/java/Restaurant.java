@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @(#) Restaurant.java
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 public class Restaurant {
 	public String address;
 	
-	public static final int UTILITYCOSTS = 4000;
+	public int UTILITYCOSTS = 4000;
 	
 	public double availableBudget;
 
@@ -34,6 +35,7 @@ public class Restaurant {
 	public Restaurant() {
 		// initial budget is 10000
 		// initial reputation is 15
+		//game = new Game();
 		availableBudget = 10000;
 		reputation = 15;
 		tables = new ArrayList<Table>();
@@ -55,6 +57,7 @@ public class Restaurant {
 		do {
 			// get input
 			game.collectInput();
+			
 			// convert input to integer
 			parsedOut = Integer.parseInt(game.userInput);
 			// while parsedut is less than 0 or greater than 9
@@ -71,37 +74,27 @@ public class Restaurant {
 	 */
 	public void assignTablesToServingWaiters() {
 		// instantiate game
-		Game game = new Game();
 		// set Waiters for each table
-		for (Waiter waiter : waitersList) {
+		for (Table table : tables) {
 
 			// each employee can be assigned 3 times
 			// please select tables for marco
+//			int measure = 0; 
+//			if(tables.size() == 9)
+//				measure = 3;
+//			else if(tables.size() == 5)
+//				measure = 2;
+//			else if(tables.size()==2)
+//				measure = 1;
+			int pos = getRandomIndex(3);
+			Waiter waiter = waitersList.get(pos);
+			int position = tables.indexOf(table)+1;
+			table.setServingWaiter(waiter);
 			System.out.println("===================================="
 					+ "\nPlease Assign :" + waiter.getName() + " to a table");
-			int count = 1;
-			int measure = 0; 
-			if(tables.size() == 9)
-				measure = 3;
-			else if(tables.size() == 5)
-				measure = 2;
-			else if(tables.size()==2)
-				measure = 1;
-			do {
-				System.out.println("++++++++ Table: " + count
+			System.out.println("++++++++ Table: " + position
 						+ "+++++++++++++++");
 				printTablesAssignmentList();
-				int convertedInputString;
-				// if empty or less than 0 or greater than 9
-				// complain and make the user put it again
-				convertedInputString = assignTablesByUserInput(game, count);
-				// then get the table based on the index
-				Table selectedTable = tables.get(convertedInputString - 1);
-				// set the waiter
-				selectedTable.setServingWaiter(waiter);
-				count++;
-			} while (count <= measure);
-			count = 1;
 		}
 		// view the final Assignment
 		System.out.println("" + "\n==================================="
@@ -121,13 +114,18 @@ public class Restaurant {
 		waitersList = new ArrayList<Waiter>();
 		Waiter w1 = new Waiter("Josh", "kola", "12345", 300,
 				ExperienceLevel.Low);
+		w1.getTrainingCost();
 		Waiter w2 = new Waiter("Molly", "Coola", "12345", 300,
 				ExperienceLevel.Low);
+		w2.getTrainingCost();
 		Waiter w3 = new Waiter("Kate", "Jones", "12345", 300,
 				ExperienceLevel.Low);
+		w3.getTrainingCost();
 		BarMan b1 = new BarMan("Bobo", "Coola", "1234", 400,
 				ExperienceLevel.Low);
+		b1.getTrainingCost();
 		Chef c1 = new Chef("Samoa", "Jones", "1234", 500, ExperienceLevel.Low);
+		c1.getTrainingCost();
 
 		// Add employees to lists
 		waitersList.add(w1);
@@ -141,6 +139,11 @@ public class Restaurant {
 	}
 
 	public double deductSalaries(){
+		double totalSalary = 0;
+		for (Employee employees : employees) {
+			totalSalary += employees.getSalary();
+		}
+		deductFromAvailableBudget(totalSalary);
 		return availableBudget;
 	}
 
@@ -165,7 +168,7 @@ public class Restaurant {
 	}
 
 	public double paySuppliers(Menu menu){
-		return availableBudget = availableBudget - menu.gettotalIngredientsCost();
+		return availableBudget -= menu.gettotalIngredientsCost();
 	}
 	
 	public double addTotalClientsMoney(){
@@ -200,14 +203,12 @@ public class Restaurant {
 
 	public void receiveClients() {
 		for (Table table : tables) {
-			int clientCount = 0;
-			do {
+			for (int i = 0; i < 2; i++) {
 				Client client = new Client();
 				clients.add(client);
 				table.clients = new ArrayList<Client>();
 				table.clients.add(client);
-				clientCount++;
-			} while (clientCount < 2);
+			}
 
 		}
 	}
@@ -224,7 +225,7 @@ public class Restaurant {
 					+ "\n=========================================="
 					+ "\n------------------------------------------"
 					+ "\n-----Table : "+ table.getTableNo()+ "-----"
-					+ "\n"+ waiter.getName()+ "just received two orders"
+					+ "\n"+ waiter.getName()+ " just received two orders"
 					);
 			
 			// clients order a meal
@@ -233,27 +234,29 @@ public class Restaurant {
 					StringBuilder selecteditems = new StringBuilder();
 					//for each client				
 					for (Client client : table.clients) {
-						ArrayList<MenuItem> items = new ArrayList<MenuItem>();
 						//select random menu item	
 						MealOrder mealOrder =  new MealOrder();
 						selecteditems.append("\nClient:" + client.getName());
+						
 						//select random beverage
+						int beverageSet = 0;
 						do {
-							int index = getRandomIndex(menu);
+							int index = getRandomIndex(menu.menuItems.size());
 							MenuItem selectedMenuItem = menu.menuItems.get(index);
 							if (selectedMenuItem.getClass() == Beverage.class) {
 								mealOrder.orderedBeverage = (Beverage) selectedMenuItem;
 								priceDifference = selectedMenuItem.price - selectedMenuItem.ingredientCost;
 								if(priceDifference >=3)
 									priceDifference = Math.round(priceDifference*100.0);
-								break;
+								beverageSet = 1;
 							} 
-						} while (true);
+						} while (beverageSet == 0);
 						selecteditems.append("\n-----------------------------------");
 						selecteditems.append("\nBeverage: "+ mealOrder.getBeverage().name);
 						//select random dish
+						int drinkset = 0;
 						do {
-							int index = getRandomIndex(menu);
+							int index = getRandomIndex(menu.menuItems.size());
 							MenuItem selectedMenuItem = menu.menuItems.get(index);
 							if (selectedMenuItem.getClass() == Dish.class) {
 								mealOrder.orderedDish = (Dish) selectedMenuItem;
@@ -262,9 +265,9 @@ public class Restaurant {
 								if(priceDifference >=3)
 									priceDifference = Math.round(priceDifference*100.0);
 									percentagetoDecrease = priceDifference * 10;
-								break;
+									drinkset =1;
 							} 
-						} while (true);
+						} while (drinkset == 0);
 						selecteditems.append("\nDish : "+ mealOrder.getDish().name);
 						selecteditems.append("\n-----------------------------------");
 						client.setTotalMoneySpent(mealOrder.orderedDish.getPrice());
@@ -286,7 +289,7 @@ public class Restaurant {
 						clientSatisfaction = client
 								.getClientSatisfactionEvaluation(employeePercentageAverage);
 						//menu
-						clientSatisfaction = Math.round(clientSatisfaction*100.0);
+						//clientSatisfaction = Math.round(clientSatisfaction*100.0);
 						reputation += clientSatisfaction;
 					}
 					count++;
@@ -300,8 +303,13 @@ public class Restaurant {
 	 * @param menu
 	 * @return
 	 */
-	public int getRandomIndex(Menu menu) {
-		int index = (int) (Math.random() * menu.menuItems.size());
+	public int getRandomIndex(int size) {
+		Random r =  new Random();
+		int index = 0;
+		index = r.nextInt(size);
+		if(index <=0){
+			index = size-(size-2);
+		}
 		return index;
 	}
 	public void setEmployees(ArrayList<Employee> employees) {
@@ -328,6 +336,11 @@ public class Restaurant {
 			// add each table
 			tables.add(table);
 		}
+	}
+
+	public double payUtilityCosts() {
+		deductFromAvailableBudget(UTILITYCOSTS);
+		return availableBudget;
 	}
 
 	/**
@@ -361,61 +374,83 @@ public class Restaurant {
 		return employeePercentageAverage;
 	}
 
-	public double payUtilityCosts() {
-		return availableBudget = availableBudget - UTILITYCOSTS;
-	}
-	
-	public void loadTrainingMenu(String userInput) {
-		switch (userInput) {
-		case "train":
-			System.out.println("-----------------------------------"
-					+ "\nWelcome to WORKFASTER Cooking School,"
-					+ "\nHere are the Costs:"
-					+ "\n 1. To Train Waiters = 800€"
-					+ "\n 2. To Train Barman = 1200€"
-					+ "\n 3. To Train Chef   = 1200€"
-					+ "\n 4. Return To Restaurant"
-					+ "\nSelect Employees To Trains"
-					+ city + "");
-			do {
-				game.collectInput();
-				switch (userInput) {
-				case "1":
+	public void loadTrainingMenu(String userInputs) {
+		if (userInputs == "train") {
+			viewTrainMenu();
+			for (int i = 0; i < 2; i++) {
+				Game game2 = new Game();
+				game2.collectInput();
+				switch (game2.userInput) {
+				case "a":
 					System.out.println("===================================="
 							+ "\n ++ Please Select who to Train ++");
 					for (Waiter waiter : waitersList) {
 						int position = employees.indexOf(waiter) + 1;
-							System.out.println("\n " + position + " Waiter :"
-									+ waiter.getName());
-						System.out.println("\n 4. ALL");
+						System.out.println("\n " + position + " Waiter :"
+								+ waiter.getName());
 					}
-				case "2":
+					int input = Integer.parseInt(game2.collectInput());
+
+					if (input <= 3 && input >= 1) {
+						Waiter waiter = waitersList.get(input - 1);
+						deductFromAvailableBudget(waiter.train(availableBudget));
+						i = 1;
+						viewTrainMenu();
+					}
+				case "b":
 					BarMan barman = new BarMan();
 					for (Employee employee : employees) {
 						if (employee.getClass() == BarMan.class) {
 							barman = (BarMan) employee;
 						}
 					}
-					barman.train(game);
-				case "3":
-
+					i = 1;
+					deductFromAvailableBudget(barman.train(availableBudget));
+					viewTrainMenu();
+				case "c":
+					Chef chef = new Chef();
+					for (Employee employee : employees) {
+						if (employee.getClass() == Chef.class) {
+							chef = (Chef) employee;
+						}
+						i = 1;
+					}
+					deductFromAvailableBudget(chef.train(availableBudget));
+					viewTrainMenu();
 				default:
-					break;
 				}
-			} while (true);
-		case "2":
-
-		case "3":
-
-		default:
-			break;
+				;
+			}
+			;
 		}
+	}
+
+	/**
+	 * @param waiterstr
+	 */
+	public void viewTrainMenu() {
+		StringBuilder waiterstr = new StringBuilder();
+		for (Waiter waiter : waitersList) {
+			int position = employees.indexOf(waiter) + 1;
+				waiterstr.append("\n " + position + " Waiter :"
+						+ waiter.getName());
+		}
+		System.out.println("-----------------------------------"
+				+ "\nWelcome to WORKFASTER Cooking School,"
+				+ "\nHere are the Costs:"
+				+ "\n a. To Train Waiters = 800€"
+				+ waiterstr.toString()
+				+ "\n b. To Train BarMan = 1200€"
+				+ "\n c. To Train Chef   = 1200€"
+				+ "\n 4. Return To Restaurant"
+				+ "\nSelect Employees To Trains"
+				+ city + "");
 	}
 
 	/**
 	 * @param barman
 	 */
 	public void deductFromAvailableBudget(double value) {
-		availableBudget = availableBudget - value;
+		availableBudget -= value;
 	}
 	}

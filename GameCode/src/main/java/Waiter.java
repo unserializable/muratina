@@ -10,9 +10,31 @@ public class Waiter extends Employee
 		super(name, surname, phoneNo, salary, experienceLevel);
 	}
 
+
+	@Override
+	public double train(double availableBudget) {
+		// TODO Auto-generated method stub
+		return super.train(availableBudget);
+	}
+
+
+	public Waiter() {
+		setTrainingCost(800);
+	}
+
+	@Override
+	public double getTrainingCost() {
+		return 800;
+	}
+
 	@Override
 	public ExperienceLevel getExperienceLevel() {
 		return super.getExperienceLevel();
+	}
+
+	@Override
+	public String getName() {
+		return super.getName();
 	}
 
 	@Override
@@ -36,11 +58,6 @@ public class Waiter extends Employee
 			break;
 		}
 		return super.increaseExperience();
-	}
-
-	@Override
-	public String getName() {
-		return super.getName();
 	}
 	
 	

@@ -35,6 +35,8 @@ public class Controller {
 					        highScoreList.getScoreList();
 					        System.out.println("++++++++++++++++++++++++");
 					        viewStartMenu();
+					  case "train":
+							game.loadTraining();
 					  case "42":
 						     System.out.println("Bye Bye");
 						     game.gameOver();

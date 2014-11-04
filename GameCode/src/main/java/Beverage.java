@@ -1,3 +1,5 @@
+import java.util.Random;
+
 
 /**
  * @(#) Beverage.java
@@ -19,11 +21,16 @@ public class Beverage extends MenuItem
 		super(name, price, quality,ingredientCost);
 		this.volume = volume;
 	}
+	public Beverage() {
+		generateDishData();
+	}
+
 	/**
 	 * @param beverage
 	 * @param quality
+	 * @return 
 	 */
-	public void calculateIngredientCost(String quality) {
+	public QualityLevel calculateIngredientCost(String quality) {
 		if (quality.contains("1")) {
 			super.quality = QualityLevel.High;
 			ingredientCost = 3;
@@ -31,6 +38,22 @@ public class Beverage extends MenuItem
 			super.quality = QualityLevel.Low;
 			ingredientCost = 1;
 		}
+		return super.quality;
 	}
+	
+	public void generateDishData() {
+		Random r = new Random();
+		String[] names = { "Wine", "Beer", "Juice", "Muratina", "Water",
+				"Cider", "Coke", "fanta", "Sprite", "Ginger", "Tea",
+				"Coffee", "Soup" };
+
+		int nindex = (int) (Math.random() * names.length);
+		name = names[nindex];
+		String qindex = Integer.toString((int)(Math.random() * 2));
+		volume = r.nextInt(300);
+		quality = calculateIngredientCost(qindex);
+
+	}
+
 
 }

@@ -2,3 +2,5 @@
 Mikegruder0.0
 MikeEmbe0.0
 Mike : De : 0.0
+Player: m Store:nReputation: 537.0
+Player: m Store:nReputation: 532.0

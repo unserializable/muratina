@@ -15,6 +15,11 @@ public class Table {
 
 	ArrayList<Waiter> servingWaiters;
 
+	private Table() {
+		servingWaiters = new ArrayList<Waiter>();
+		clients = new ArrayList<Client>();
+	}
+
 	private Integer tableNo;
 
 	public Table(Integer tableNo, MealOrder mealOrder, Boolean occupied,
