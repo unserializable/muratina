@@ -11,7 +11,7 @@ public class SimulationGenerator {
 	};
 
 	private static final String[] SURNAMES = {
-			"Peelo", "Michuki", "Tamm", "Saar", "Kask", "Reyes", "Nguyen", "Javed", "Naved", "Raie", "Vilo",
+			"Peelo", "Michuki", "Tamm", "Saar", "Kask", "Reyes", "Nguyen", "Javed", "Hadachi", "Raie", "Vilo",
 			"Maggi", "Tretjakov", "Torvalds", "Gates", "Laks", "Perv", "Gainsbourg", "Adekunle", "Formaggi"
 	};
 
@@ -119,7 +119,7 @@ public class SimulationGenerator {
 		Set<Dish> dishes = new LinkedHashSet<>(5);
 		for (Integer i: rndCombination(5, TEST_DISHES.length)) {
 			Dish dish = new Dish();
-			dish.setCalorieCount(1213).setName(TEST_DISHES[i-1]).setQuality(QualityLevel.HIGH).setPrice(18);
+			dish.setCalorieCount(1213).setName(TEST_DISHES[i-1]).setQuality(QualityLevel.HIGH).setPrice(2000);
 			dishes.add(dish);
 		}
 		return dishes;
@@ -130,7 +130,7 @@ public class SimulationGenerator {
 		Set<Beverage> beverages = new LinkedHashSet<>(5);
 		for (Integer i: rndCombination(5, TEST_BEVERAGES.length)) {
 			Beverage dish = new Beverage();
-			dish.setVolume(100).setName(TEST_BEVERAGES[i-1]).setQuality(QualityLevel.HIGH).setPrice(11);
+			dish.setVolume(100).setName(TEST_BEVERAGES[i-1]).setQuality(QualityLevel.HIGH).setPrice(1000);
 			beverages.add(dish);
 		}
 		return beverages;

@@ -21,10 +21,6 @@ public class Game
 		this.restaurant = restaurant;
 	}
 
-	public int getDay() {
-		return day;
-	}
-
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}

@@ -143,6 +143,10 @@ public class Restaurant
 		return this;
 	}
 
+	public Integer getDebtToSuppliers() {
+		return debtToSuppliers;
+	}
+
 	public Restaurant paySalaries() {
 		for (Employee e: staff) {
 			availableBudget -= e.getSalary();

@@ -37,14 +37,6 @@ public class Employee extends Person
 		return EmployeeType.WAITER.equals(employeeType);
 	}
 
-	public boolean isBarman() {
-		return EmployeeType.BARMAN.equals(employeeType);
-	}
-
-	public boolean isChef() {
-		return EmployeeType.CHEF.equals(employeeType);
-	}
-
 	public int getTrainingCost()
 	{
 		if (!Arrays.asList(EmployeeType.values()).contains(employeeType))

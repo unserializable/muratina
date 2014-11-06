@@ -38,6 +38,9 @@ public class GameController {
 	private static final String MATCH_INTEGER = "(\\d+)";
 	private static final Pattern CMD_EXTRACTOR_PATTERN = Pattern.compile("(\\d+)\\..*");
 
+	private static final String REPUTATION_MINUS = "(-)";
+	private static final String REPUTATION_PLUS = "(+)";
+
 	private static final String AA_GAME_NAME = "\n __  __                 _   _        	"
 			+ "\n|  \\/  |_   _ _ __ __ _| |_(_)_ __   __ _"
 			+ "\n| |\\/| | | | | '__/ _` | __| | '_ \\ / _` |"
@@ -166,15 +169,16 @@ public class GameController {
 				}
 
 				System.out.println("Game has ended successfully, score was " + game.getScore());
+				showClientStatistics(game);
 				break;
 			}
 
-			if (0 != game.getDay() && game.getDay() % 7 == 0) {
+			if (0 != game.day && game.day % 7 == 0) {
 				game.getRestaurant().payDebtToSuppliers();
 				game.getRestaurant().paySalaries();
 
 				System.out.println("After paying suppliers and employees, '" + game.getRestaurant().getName() + "' budget is " +
-						game.getRestaurant().getCurrentBudget());
+						game.getRestaurant().getCurrentBudget() + ".");
 			}
 
 			if (game.getRestaurant().getCurrentBudget() < 0) {
@@ -189,10 +193,44 @@ public class GameController {
 		}
 	}
 
+	private static void showClientStatistics(Game game) {
+		Restaurant r = game.getRestaurant();
+		System.out.println("During your reign at '" + r.getName() + "' in " + r.getCity() + ", these clients brought you money and ate your food.");
+		for (Client c: game.getClientPopulation()) {
+			Integer t = c.getTotalMoneySpent();
+			if (t > 0) {
+				System.out.println(c + ", (" + c.getPhoneNo() +  " tax-code  " + c.getTaxCode()
+						+ ") spent total of " + c.getTotalMoneySpent() + " euros at '" + r.getName()
+						+ "' averaging " + c.getAvgDishCalorieCount() + "kcal per meal and " + c.getAvgBeverageVolume()
+						+ "ml per drink.");
+				List<MealOrder> mealOrders = c.peekMealOrders();
+				Map<MenuItem, Integer> menuItemCounts = new LinkedHashMap<>();
+				for (MealOrder mo: mealOrders) {
+					Dish dish = mo.getFoodorder();
+					Beverage bev = mo.getDrinkorder();
+					Integer dishCnt = menuItemCounts.get(dish);
+					Integer bevCnt = menuItemCounts.get(bev);
+					dishCnt = dishCnt == null ? 1 : dishCnt + 1;
+					bevCnt = bevCnt == null ? 1 : bevCnt + 1;
+					menuItemCounts.put(dish, dishCnt);
+					menuItemCounts.put(bev, bevCnt);
+				}
+
+				for (Map.Entry<MenuItem, Integer> counts: menuItemCounts.entrySet()) {
+					StringBuilder sb = new StringBuilder("\t");
+						sb.append(counts.getKey() instanceof Dish ? "Ate" : "Drank").append(" '")
+								.append(counts.getKey().getName() + "' " + counts.getValue() + " times.");
+					System.out.println(sb.toString());
+				}
+			}
+		}
+	}
+
 	private static void daySimulation(Game game) {
 		Restaurant restaurant = game.getRestaurant();
 		int startingBudget = restaurant.getCurrentBudget();
 		int startingReputation = restaurant.getReputation();
+		int startingDebtToSuppliers = restaurant.getDebtToSuppliers();
 
 		int potentiallyOccupiedTableCount = restaurant.isHighReputation() ? 9 : restaurant.isLowReputation() ? 2 : 5;
 		Set<Table> servicedTables = new LinkedHashSet<>();
@@ -285,14 +323,14 @@ public class GameController {
 			boolean sSatisfied = RANDOM.nextDouble() > (100 - probServiceSatisfaction)/100.0;
 			boolean fSatisfied = RANDOM.nextDouble() > (100 - probFoodSatisfaction)/100.0;
 			boolean dSatisfied = RANDOM.nextDouble() > (100 - probDrinkSatisfaction)/100.0;
-			String sers = sSatisfied ? "was satisfied with service" : "was unsatisfied with service";
-			String foos = fSatisfied ? "satisfied with food" : "unsatisfied with food";
-			String dris = dSatisfied ? "satisfied with drink" : "unsatisfied with drink";
+			String rs = sSatisfied ? REPUTATION_PLUS : REPUTATION_MINUS;
+			String rf = fSatisfied ? REPUTATION_PLUS : REPUTATION_MINUS;
+			String rd = dSatisfied ? REPUTATION_PLUS : REPUTATION_MINUS;
 
-			System.out.println(c + " was serviced by " +
+			System.out.print(c + " was serviced " + rs + " by " +
 					employeeToShortString(daysClientWaiters.get(c))
-					 + " at table " + daysClientTables.get(c).getTableNo() + ".");
-			System.out.println("Ordered '" + d.getName() + "' and '" + b.getName() + "', " + sers + ", " + foos + ", " + dris + ".");
+					+ " at table " + daysClientTables.get(c).getTableNo() + ", ");
+			System.out.println("ordered '" + d.getName() + "' " + rf + " and '" + b.getName() + "' " + rd);
 
 			restaurant.sellMenuItem(d);
 			restaurant.sellMenuItem(b);
@@ -300,14 +338,17 @@ public class GameController {
 		}
 
 		int endingBudget = restaurant.getCurrentBudget();
-		System.out.println("Budget after daily cash count was "  + endingBudget + ", change during day was " + (endingBudget-startingBudget));
-		System.out.println("Restaurant reputation is now "  + restaurant.getReputation() + ", change during day was " + (restaurant.getReputation()-startingReputation));
+		System.out.println(OUTPUT_SEPARATOR);
+		System.out.println("Budget after daily cash count was "  + endingBudget + ", change during day was " +
+							(endingBudget-startingBudget) + " euros, debt to suppliers increased by " +
+							(restaurant.getDebtToSuppliers() - startingDebtToSuppliers) + " euros, to " + restaurant.getDebtToSuppliers() + " euros.");
+		System.out.println("Restaurant reputation is now "  + restaurant.getReputation() + ", change during day was " + (restaurant.getReputation()-startingReputation) + ".");
 		System.out.println(OUTPUT_SEPARATOR);
 	}
 
 	// decisions that can be made to (or have to be made) at the beginning of each business day
 	private static void dailyCommandInput(Game game) {
-		System.out.println("New dawn has broken on the morning of your " + ORDER_NOS.get(game.day) + " day as restaurant owner.");
+		System.out.println("After restless and worried night, new dawn has broken on the morning of your " + ORDER_NOS.get(game.day) + " day as restaurant owner.");
 
 		boolean letDayRoll = false;
 
@@ -449,7 +490,7 @@ public class GameController {
 	}
 
 	private static void showBankruptcy() {
-		System.out.println("Like many other entrepreneurial ventures, yours has also ended with\n");
+		System.out.println("Like many other entrepreneurial ventures, yours has also ended with ...\n");
 		System.out.println(AA_BANKRUPTCY);
 	}
 
@@ -640,9 +681,9 @@ public class GameController {
 				throw new RuntimeException(ex);
 			}
 			if (!userInput.matches(expected)) {
-				String msg = "anything at all";
+				String msg = expected.replaceAll("\\|", ", ");
 				if (MATCH_EVERYTHING.equals(expected))
-					msg = expected.replaceAll("\\|", ", ");
+					msg = "anything at all";
 				else if (MATCH_INTEGER.equals(expected))
 					msg = "some number";
 				System.out.println("Pardon me chief, command not understood! Did you want to say '" + msg + "'?");

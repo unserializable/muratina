@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,6 +21,10 @@ public class Client extends Person
 		}
 
 		return ((Long)(totalDishCalorieCount/ mealOrders.size())).intValue();
+	}
+
+	public List<MealOrder> peekMealOrders() {
+		return Collections.unmodifiableList(mealOrders);
 	}
 
 	public Integer getAvgBeverageVolume() {
