@@ -527,7 +527,7 @@ public class GameController {
 			menu.addMenuItem(askDishInfo(i));
 		}
 
-		System.out.println("... and to offer  " + Menu.MAX_DISHES +  " funky beverages to sip on.");
+		System.out.println("... and to offer  " + Menu.MAX_BEVERAGES +  " funky beverages to sip on.");
 		for (int i = 0; i < 5; i++) {
 			menu.addMenuItem(askBeverageInfo(i));
 		}
