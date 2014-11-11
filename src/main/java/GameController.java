@@ -135,7 +135,7 @@ public class GameController {
 
 		Set<Employee> staff = createStaff();
 
-		Menu menu = null;
+		Menu menu;
 		Integer command=Integer.valueOf(getUserInput("Do you want to:\n1. Create Menu yourself\n2. Let Chef put the menu together\n"));
 		if (command == 1) {
 			menu = askRestaurantMenu(game);
@@ -155,12 +155,9 @@ public class GameController {
 	}
 
 	private static void dailyLoop(Game game) {
-		boolean gameEnded = false;
-
-		while (!gameEnded) {
+		while (true) {
 			if (game.day == 30) {
 				game.getRestaurant().payMonthlyCosts();
-				gameEnded = true;
 
 				System.out.println("Monthly rental costs were paid and budget became " + game.getScore());
 				if (game.getScore() < 0) {
@@ -183,7 +180,6 @@ public class GameController {
 
 			if (game.getRestaurant().getCurrentBudget() < 0) {
 				showBankruptcy();
-				gameEnded = true;
 				break;
 			}
 
@@ -595,7 +591,6 @@ public class GameController {
 
 	public static String menuToString(Menu menu) {
 		StringBuilder sb = new StringBuilder();
-		Set <MenuItem> menuItems = new LinkedHashSet<>();
 
 		int maxMenuNameLen = 0;
 		for (MenuItem item: menu.getMenuItems()) {

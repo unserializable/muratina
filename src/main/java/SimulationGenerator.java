@@ -40,7 +40,7 @@ public class SimulationGenerator {
 	}
 
 	public static Set<Client> rndPopulation(Integer populationSize) {
-		Set<Client> result = new HashSet<Client>(populationSize);
+		Set<Client> result = new HashSet<>(populationSize);
 		while (result.size() < populationSize) {
 			result.add(rndClient());
 		}
@@ -92,7 +92,7 @@ public class SimulationGenerator {
 		return String.valueOf(10 + random.nextInt(89)) + String.valueOf(100000000 + random.nextInt(899999999));
 	}
 
-	public static Set<Integer> rndCombination(Integer k, Integer n) {
+	public static Set<Integer> rndCombination(int k, int n) {
 		Set<Integer> combination = new HashSet<>(k);
 		if (k == n) {
 			for (int i = 1; i <= n; i++)
@@ -105,7 +105,7 @@ public class SimulationGenerator {
 		return combination;
 	}
 
-	public static <T> Set<T> rndCombination(Integer k, Set<T> things) {
+	public static <T> Set<T> rndCombination(int k, Set<T> things) {
 		Set<T> result = new HashSet<>(k);
 		Set<Integer> combination = rndCombination(k, things.size());
 		for (Integer i: combination) {
